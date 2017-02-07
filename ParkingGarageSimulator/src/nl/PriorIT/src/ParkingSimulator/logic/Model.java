@@ -66,8 +66,7 @@ public class Model extends JFrame {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
-	    simulatorModel = new Model(3, 6, 30);
-	    
+	    size2 = new Dimension(0,0);
 	    carParkView = new CarParkView();
 	    
         Container contentPane = getContentPane();
@@ -75,7 +74,7 @@ public class Model extends JFrame {
         pack();
         setVisible(true);
 
-        updateView();
+        updateView2();
 	}
 
 private void handleEntrance(){
@@ -187,7 +186,7 @@ private void carLeavesSpot(Car car){
 }
 
 
-    public void updateView() {
+    public void updateView2() {
         updateView();
     }
     
@@ -216,7 +215,7 @@ private void carLeavesSpot(Car car){
             return;
         }
 
-        Dimension currentSize = getSize2();
+        Dimension currentSize = getSize();
         if (size2.equals(currentSize)) {
             g.drawImage(carParkImage, 0, 0, null);
         }
@@ -226,10 +225,10 @@ private void carLeavesSpot(Car car){
         }
     }
     
-    public void updateView2() {
+    public void updateView() {
         // Create a new car park image if the size has changed.
         if (!size2.equals(getSize2())) {
-            size2 = getSize2();
+            size2 = getSize();
             carParkImage = carParkView.createImage(size2.width, size2.height);
         }
         Graphics graphics = carParkView.getGraphics();
