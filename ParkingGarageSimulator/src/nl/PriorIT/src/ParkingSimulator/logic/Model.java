@@ -65,15 +65,8 @@ public class Model extends JFrame {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
-	    carParkView = new CarParkView();
 	    size = new Dimension(800,600);
 	    
-        Container contentPane = getContentPane();
-        contentPane.add(carParkView, BorderLayout.CENTER);
-        pack();
-        setVisible(true);
-
-        updateView();
         
 	}
 
@@ -92,7 +85,7 @@ private void handleExit(){
 private void updateViews(){
 	tick();
     // Update the car park view.
-    updateView();	
+    carParkView.updateView();	
 }
 
 private void carsArriving(){
@@ -216,25 +209,6 @@ private void carLeavesSpot(Car car){
         }
     }
     
-    public void updateView() {
-        // Create a new car park image if the size has changed.
-        if (!size.equals(getSize())) {
-            size = getSize();
-            carParkImage = carParkView.createImage(size.width, size.height);
-        }
-        Graphics graphics = carParkView.getGraphics();
-        for(int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for(int row = 0; row < getNumberOfRows(); row++) {
-                for(int place = 0; place < getNumberOfPlaces(); place++) {
-                    Location location = new Location(floor, row, place);
-                    Car car = getCarAt(location);
-                    Color color = car == null ? Color.white : car.getColor();
-                    carParkView.drawPlace(graphics, location, color);
-                }
-            }
-        }
-        carParkView.repaint();
-    }
     
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
