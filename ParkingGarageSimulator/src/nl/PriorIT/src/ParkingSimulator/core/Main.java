@@ -5,6 +5,8 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 
+import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
 
@@ -12,25 +14,25 @@ import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
 public class Main {
 
 	private Model simulatorModel;
-	private CarParkView cpView;
+	private CarParkView carparkview;
 	private JFrame screen;
+	private SimulatorController controller;
 	//private CarParkView carParkView;
     /**
      * @param args
      */
 	public Main () {
-		screen = new JFrame();
-		simulatorModel = new Model(1, 2, 10);
-    	cpView = new CarParkView(simulatorModel);
+	screen = new JFrame();
+	simulatorModel = new Model(1, 1, 10);
+	controller = new SimulatorController(simulatorModel);
+    	carparkview = new CarParkView(simulatorModel,controller);
     	screen.setSize(800, 600);
-		screen.setResizable(false);
-		screen.setLayout(null);
-		screen.getContentPane().add(cpView);
-		cpView.setBounds(10, 10, 200, 200);
-		screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        screen.pack();
+	screen.setResizable(false);
+	screen.setLayout(null);
+	screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	screen.getContentPane().add(carparkview);
+	carparkview.setBounds(0,0,800,600);
         screen.setVisible(true);
-        cpView.updateView();
 	}
 	
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
-public class Model extends JFrame {
+public class Model extends GeneralModel {
 	
 	private CarQueue entranceCarQueue;
 	private CarQueue entrancePassQueue;
@@ -22,7 +22,7 @@ public class Model extends JFrame {
 	private Image carParkImage;
 	
 	private int numberOfFloors;
-    private int numberOfRows;
+	private int numberOfRows;
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private Car[][][] cars;
@@ -92,7 +92,7 @@ public void advanceTime(){
 public void updateViews(){
 	tick();
     // Update the car park view.
-    carParkView.updateView();	
+   // carParkView.updateView();	
 }
 
 private void carsArriving(){

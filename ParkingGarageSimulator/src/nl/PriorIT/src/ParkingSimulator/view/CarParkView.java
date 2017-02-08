@@ -5,26 +5,30 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+
+import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 import javax.swing.JPanel;
 
-public class CarParkView extends JPanel {
+public class CarParkView extends GeneralView {
         
         private Dimension size;
         private Image carParkImage;
-        private Model model;
-        //private int tickPause = 100;
+        private Model simulatormodel;
+        private GeneralController controller;
+        private int tickPause = 100;
     
         /**
          * Constructor for objects of class CarPark
          */
-        public CarParkView(Model model) {
-            this.model = model;
-        	size = new Dimension(0, 0);
+        public CarParkView(Model simulatormodel, GeneralController controller) {
+            super(simulatormodel, controller);
+
         }
     
+       
         /**
          * Overridden. Tell the GUI manager how big we would like to be.
          */
@@ -33,23 +37,23 @@ public class CarParkView extends JPanel {
         }
     
         /**
-         * Overriden. The car park view component needs to be redisplayed. Copy the
+         * Overridden. The car park view component needs to be redisplayed. Copy the
          * internal image to screen.
          */
         public void paintComponent(Graphics g) {
-            if (carParkImage == null) {
-                return;
-            }
-    
-            Dimension currentSize = getSize();
-            if (size.equals(currentSize)) {
-                g.drawImage(carParkImage, 0, 0, null);
-            }
-            else {
-                // Rescale the previous image.
-                g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
-            }
-        }
+    	  if(carParkImage == null) {
+    	      return;
+    	  }
+    	  
+    	  Dimension currentSize = getSize();
+    	  if (size.equals(currentSize)) {
+    	      g.drawImage(carParkImage, 0, 0, null);
+    	  }
+    	  else {
+    	      // Rescale the previous image
+    	      g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
+    	  }
+      }
         
         /**
          * Paint a place on this car park view in a given color.
@@ -61,12 +65,17 @@ public class CarParkView extends JPanel {
                 size = getSize();
                 carParkImage = this.createImage(size.width, size.height);
             }
+            
+            if(size == null) {
+        	System.out.println("Jos eet zijn brood niet op!!!");
+            }
+            else {
             Graphics graphics = this.getGraphics();
-            for(int floor = 0; floor < model.getNumberOfFloors(); floor++) {
-                for(int row = 0; row < model.getNumberOfRows(); row++) {
-                    for(int place = 0; place < model.getNumberOfPlaces(); place++) {
+            for(int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
+                for(int row = 0; row < simulatormodel.getNumberOfRows(); row++) {
+                    for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
-                        Car car = model.getCarAt(location);
+                        Car car = simulatormodel.getCarAt(location);
                         Color color = car == null ? Color.white : car.getColor();
                         drawPlace(graphics, location, color);
                     }
@@ -74,20 +83,21 @@ public class CarParkView extends JPanel {
             }
             repaint();
         }
-        /*
+        }
+        
         public void tick() {
-        	model.advanceTime();
-        	model.handleExit();
-        	model.updateViews();
+        	simulatormodel.advanceTime();
+        	simulatormodel.handleExit();
+        	simulatormodel.updateViews();
         	// Pause.
             try {
                 Thread.sleep(tickPause);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        	model.handleEntrance();
+        	simulatormodel.handleEntrance();
         }
-        */
+        
         public static void drawPlace(Graphics graphics, Location location, Color color) {
             graphics.setColor(color);
             graphics.fillRect(
@@ -98,5 +108,4 @@ public class CarParkView extends JPanel {
         }
         
     }
-
 
