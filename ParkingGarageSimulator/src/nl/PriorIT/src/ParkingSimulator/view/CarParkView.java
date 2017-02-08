@@ -1,6 +1,7 @@
 package nl.PriorIT.src.ParkingSimulator.view;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,13 +13,6 @@ public class CarParkView extends JPanel {
         
         private Dimension size;
         private Image carParkImage;
-        
-        private CarParkView carParkView;
-        private int numberOfFloors;
-        private int numberOfRows;
-        private int numberOfPlaces;
-        private int numberOfOpenSpots;
-        private Car[][][] cars;
     
         /**
          * Constructor for objects of class CarPark
@@ -52,7 +46,7 @@ public class CarParkView extends JPanel {
                 g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
             }
         }
-    
+        
         /**
          * Paint a place on this car park view in a given color.
          */

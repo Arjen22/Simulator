@@ -26,7 +26,6 @@ public class Model extends JFrame {
 	private Model simulatorModel;
 	private CarParkView carParkView;
 	private Image carParkImage;
-	private Dimension size2;
 	
 	private int numberOfFloors;
     private int numberOfRows;
@@ -34,7 +33,7 @@ public class Model extends JFrame {
     private int numberOfOpenSpots;
     private Car[][][] cars;
     
-    private int size;
+    private Dimension size;
 
 	private int day = 0;
 	private int hour = 0;
@@ -66,15 +65,16 @@ public class Model extends JFrame {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
-	    size2 = new Dimension(0,0);
 	    carParkView = new CarParkView();
+	    size = new Dimension(800,600);
 	    
         Container contentPane = getContentPane();
         contentPane.add(carParkView, BorderLayout.CENTER);
         pack();
         setVisible(true);
 
-        updateView2();
+        updateView();
+        
 	}
 
 private void handleEntrance(){
@@ -184,11 +184,6 @@ private void carLeavesSpot(Car car){
 	removeCarAt(car.getLocation());
     exitCarQueue.addCar(car);
 }
-
-
-    public void updateView2() {
-        updateView();
-    }
     
 	public int getNumberOfFloors() {
         return numberOfFloors;
@@ -206,17 +201,13 @@ private void carLeavesSpot(Car car){
     	return numberOfOpenSpots;
     }
     
-    public Dimension getSize2() {
-        return size2;
-    }
-    
     public void paintComponent(Graphics g) {
         if (carParkImage == null) {
             return;
         }
 
         Dimension currentSize = getSize();
-        if (size2.equals(currentSize)) {
+        if (size.equals(currentSize)) {
             g.drawImage(carParkImage, 0, 0, null);
         }
         else {
@@ -227,9 +218,9 @@ private void carLeavesSpot(Car car){
     
     public void updateView() {
         // Create a new car park image if the size has changed.
-        if (!size2.equals(getSize2())) {
-            size2 = getSize();
-            carParkImage = carParkView.createImage(size2.width, size2.height);
+        if (!size.equals(getSize())) {
+            size = getSize();
+            carParkImage = carParkView.createImage(size.width, size.height);
         }
         Graphics graphics = carParkView.getGraphics();
         for(int floor = 0; floor < getNumberOfFloors(); floor++) {
@@ -238,7 +229,7 @@ private void carLeavesSpot(Car car){
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
-                    CarParkView.drawPlace(graphics, location, color);
+                    carParkView.drawPlace(graphics, location, color);
                 }
             }
         }

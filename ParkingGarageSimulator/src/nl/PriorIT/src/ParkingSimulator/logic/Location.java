@@ -1,5 +1,7 @@
 package nl.PriorIT.src.ParkingSimulator.logic;
 
+import nl.PriorIT.*;
+ 
 public class Location {
 
     private int floor;
