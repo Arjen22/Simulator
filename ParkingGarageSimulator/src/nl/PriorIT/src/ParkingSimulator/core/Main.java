@@ -34,10 +34,4 @@ public class Main {
 	carparkview.setBounds(0,0,800,600);
         screen.setVisible(true);
 	}
-	
-    public static void main(String[] args) {
-    	new Main();
-	}
-    
-
 }
