@@ -10,12 +10,14 @@ import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
+import nl.PriorIT.src.ParkingSimulator.view.CarParkView.drawPanel;
 import nl.PriorIT.src.ParkingSimulator.view.GeneralView;
 
 public class SimulatorBuilder extends JFrame {
     
     private JFrame simulatorview;
     private GeneralView carparkview;
+    private CarParkView.drawPanel carview;
     private Model simulatormodel;
     private SimulatorController controller;
     
@@ -49,7 +51,8 @@ public class SimulatorBuilder extends JFrame {
 	simulatorview.getContentPane().add(carparkview);
 	simulatorview.setVisible(true);
 	carparkview.setBounds(0,0,800,600);
-	
+	drawPanel carview = new drawPanel();
+	carview.verfmessage();
 
     }
     

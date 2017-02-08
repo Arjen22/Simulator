@@ -25,6 +25,8 @@ public abstract class ViewBuilder extends JPanel {
 	  public ManagementView getManagementView() { return managementview; }
 	  
 	  public void createNewCarParkView() { carparkview = new CarParkView(simulatormodel, controller); }
+	  
+	  public void createNewMangagementView() { managementview = new ManagementView(simulatormodel, controller);}
 
 	  /**
 	   * public abstract void classes

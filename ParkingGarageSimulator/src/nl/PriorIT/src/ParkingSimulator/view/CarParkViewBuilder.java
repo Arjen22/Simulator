@@ -14,10 +14,6 @@ import javax.swing.JPanel;
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
-/**
- * @author Arjen
- *
- */
 public class CarParkViewBuilder extends ViewBuilder {
 
     private static final long serialVersionUID = -6177925059239806757L;
