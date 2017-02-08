@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
+import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 import javax.swing.JPanel;
 
@@ -14,12 +15,14 @@ public class CarParkView extends JPanel {
         private Dimension size;
         private Image carParkImage;
         private Model model;
+        //private int tickPause = 100;
     
         /**
          * Constructor for objects of class CarPark
          */
         public CarParkView(Model model) {
-            size = new Dimension(0, 0);
+            this.model = model;
+        	size = new Dimension(0, 0);
         }
     
         /**
@@ -51,15 +54,7 @@ public class CarParkView extends JPanel {
         /**
          * Paint a place on this car park view in a given color.
          */
-        public static void drawPlace(Graphics graphics, Location location, Color color) {
-            graphics.setColor(color);
-            graphics.fillRect(
-                    location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
-                    60 + location.getPlace() * 10,
-                    20 - 1,
-                    10 - 1); // TODO use dynamic size or constants
-        }
-        
+
         public void updateView() {
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
@@ -73,12 +68,35 @@ public class CarParkView extends JPanel {
                         Location location = new Location(floor, row, place);
                         Car car = model.getCarAt(location);
                         Color color = car == null ? Color.white : car.getColor();
-                        this.drawPlace(graphics, location, color);
+                        drawPlace(graphics, location, color);
                     }
                 }
             }
-            this.repaint();
+            repaint();
         }
+        /*
+        public void tick() {
+        	model.advanceTime();
+        	model.handleExit();
+        	model.updateViews();
+        	// Pause.
+            try {
+                Thread.sleep(tickPause);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        	model.handleEntrance();
+        }
+        */
+        public static void drawPlace(Graphics graphics, Location location, Color color) {
+            graphics.setColor(color);
+            graphics.fillRect(
+                    location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
+                    60 + location.getPlace() * 10,
+                    20 - 1,
+                    10 - 1); // TODO use dynamic size or constants
+        }
+        
     }
 
 

@@ -6,14 +6,9 @@
 package nl.PriorIT.src.ParkingSimulator.logic;
 
 import java.util.Random;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.Image;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
-import javax.swing.JPanel;
 import javax.swing.JFrame;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
@@ -23,7 +18,6 @@ public class Model extends JFrame {
 	private CarQueue entrancePassQueue;
 	private CarQueue paymentCarQueue;
 	private CarQueue exitCarQueue;
-	private Model simulatorModel;
 	private CarParkView carParkView;
 	private Image carParkImage;
 	
@@ -32,8 +26,6 @@ public class Model extends JFrame {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
     private Car[][][] cars;
-    
-    private Dimension size;
 
 	private int day = 0;
 	private int hour = 0;
@@ -65,24 +57,39 @@ public class Model extends JFrame {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
-	    size = new Dimension(800,600);
 	    
         
 	}
 
-private void handleEntrance(){
+public void handleEntrance(){
 	carsArriving();
 	carsEntering(entrancePassQueue);
 	carsEntering(entranceCarQueue);  	
 }
 
-private void handleExit(){
+public void handleExit(){
     carsReadyToLeave();
     carsPaying();
     carsLeaving();
 }
 
-private void updateViews(){
+public void advanceTime(){
+    // Advance the time by one minute.
+    minute++;
+    while (minute > 59) {
+        minute -= 60;
+        hour++;
+    }
+    while (hour > 23) {
+        hour -= 24;
+        day++;
+    }
+    while (day > 6) {
+        day -= 7;
+    }
+}
+
+public void updateViews(){
 	tick();
     // Update the car park view.
     carParkView.updateView();	
@@ -192,21 +199,6 @@ private void carLeavesSpot(Car car){
 
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
-    }
-    
-    public void paintComponent(Graphics g) {
-        if (carParkImage == null) {
-            return;
-        }
-
-        Dimension currentSize = getSize();
-        if (size.equals(currentSize)) {
-            g.drawImage(carParkImage, 0, 0, null);
-        }
-        else {
-            // Rescale the previous image.
-            g.drawImage(carParkImage, 0, 0, currentSize.width, currentSize.height, null);
-        }
     }
     
     
