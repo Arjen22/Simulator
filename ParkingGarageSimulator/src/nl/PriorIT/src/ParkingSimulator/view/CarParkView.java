@@ -41,8 +41,12 @@ public class CarParkView extends GeneralView {
          * internal image to screen.
          */
         public void paintComponent(Graphics g) {
-    	  if(carParkImage == null) {
-    	      return;
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, 200, 200);
+            
+          if(carParkImage == null) {
+              System.out.println("CarParkImage is null!");
+              return;
     	  }
     	  
     	  Dimension currentSize = getSize();

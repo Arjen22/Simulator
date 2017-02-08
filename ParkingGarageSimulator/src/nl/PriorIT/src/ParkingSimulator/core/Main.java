@@ -1,11 +1,7 @@
 package nl.PriorIT.src.ParkingSimulator.core;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
 
 import javax.swing.JFrame;
-
-import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
