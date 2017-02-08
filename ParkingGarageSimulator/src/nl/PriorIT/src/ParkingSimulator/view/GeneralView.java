@@ -1,7 +1,7 @@
 /**
  * @author PriorIT
  * @version 0.1 Daybuild 1 Revision 1
- * The general view contains all the common classes of all the views and acts as an builder.
+ * The general view contains all the common classes of all the views and acts as a adapter.
  */
 package nl.PriorIT.src.ParkingSimulator.view;
 
