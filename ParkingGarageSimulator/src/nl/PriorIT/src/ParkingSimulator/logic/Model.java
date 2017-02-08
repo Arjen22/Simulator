@@ -42,7 +42,7 @@ public class Model extends GeneralModel {
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
-	private static final String AD_HOC = "1";
+	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
 	
 
@@ -57,8 +57,6 @@ public class Model extends GeneralModel {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
-	    
-        
 	}
 
 public void handleEntrance(){
@@ -97,7 +95,7 @@ public void updateViews(){
 
 private void carsArriving(){
 	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
-    addArrivingCars(numberOfCars, AD_HOC);    	
+    addArrivingCars(numberOfCars, NORMCAR);    	
 	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
     addArrivingCars(numberOfCars, PASS);    	
 }
@@ -167,7 +165,7 @@ private int getNumberOfCars(int weekDay, int weekend){
 private void addArrivingCars(int numberOfCars, String type){
     // Add the cars to the back of the queue.
 	switch(type) {
-	case AD_HOC: 
+	case NORMCAR: 
         for (int i = 0; i < numberOfCars; i++) {
         	entranceCarQueue.addCar(new NormalCar());
         }
