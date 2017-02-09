@@ -6,10 +6,6 @@
 package nl.PriorIT.src.ParkingSimulator.logic;
 
 import java.util.Random;
-import java.awt.Image;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.JFrame;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
 public class Model extends GeneralModel {
@@ -18,20 +14,17 @@ public class Model extends GeneralModel {
 	private CarQueue entrancePassQueue;
 	private CarQueue paymentCarQueue;
 	private CarQueue exitCarQueue;
-	private CarParkView carParkView;
-	private Image carParkImage;
+	private CarParkView carparkview;
 	
 	private int numberOfFloors;
 	private int numberOfRows;
-    private int numberOfPlaces;
-    private int numberOfOpenSpots;
-    private Car[][][] cars;
+	private int numberOfPlaces;
+	private int numberOfOpenSpots;
+	private Car[][][] cars;
 
 	private int day = 0;
 	private int hour = 0;
 	private int minute = 0;
-
-	private int tickPause = 100;
 
 	int weekDayArrivals= 100; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
@@ -44,6 +37,7 @@ public class Model extends GeneralModel {
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
+        private int tickPause = 100;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
@@ -63,6 +57,12 @@ public void handleEntrance(){
 	carsArriving();
 	carsEntering(entrancePassQueue);
 	carsEntering(entranceCarQueue);  	
+}
+
+public void run() {
+    for (int i = 0; i < 1000000; i++) {
+        tick();
+    }
 }
 
 public void handleExit(){
@@ -88,9 +88,9 @@ public void advanceTime(){
 }
 
 public void updateViews(){
-	tick();
+   carparkview.tick();
     // Update the car park view.
-   // carParkView.updateView();	
+   carparkview.updateView();	
 }
 
 private void carsArriving(){
@@ -264,18 +264,17 @@ private void carLeavesSpot(Car car){
         return null;
     }
 
-    public void tick() {
-        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
-                    Location location = new Location(floor, row, place);
-                    Car car = getCarAt(location);
-                    if (car != null) {
-                        car.tick();
-                    }
-                }
-            }
+    private void tick() {
+    	advanceTime();
+    	handleExit();
+    	updateViews();
+    	// Pause.
+        try {
+            Thread.sleep(tickPause);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+    	handleEntrance();
     }
 
     private boolean locationIsValid(Location location) {

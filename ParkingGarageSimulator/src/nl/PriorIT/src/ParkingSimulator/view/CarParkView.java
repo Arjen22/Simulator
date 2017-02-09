@@ -9,6 +9,8 @@ import java.awt.Image;
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
+import nl.PriorIT.src.Parkingsimulator.Car;
+import nl.PriorIT.src.Parkingsimulator.Location;
 
 import javax.swing.JPanel;
 
@@ -18,14 +20,14 @@ public class CarParkView extends GeneralView {
         private Image carParkImage;
         private Model simulatormodel;
         private GeneralController controller;
-        private int tickPause = 100;
     
         /**
          * Constructor for objects of class CarPark
          */
         public CarParkView(Model simulatormodel, GeneralController controller) {
             super(simulatormodel, controller);
-
+            size = new Dimension(0,0);
+            this.simulatormodel=simulatormodel;
         }
     
        
@@ -42,7 +44,7 @@ public class CarParkView extends GeneralView {
          */
         public void paintComponent(Graphics g) {
             g.setColor(Color.WHITE);
-            g.fillRect(0, 0, 200, 200);
+            g.fillRect(0, 0, 400, 400);
             
           if(carParkImage == null) {
               System.out.println("CarParkImage is null!");
@@ -52,6 +54,7 @@ public class CarParkView extends GeneralView {
     	  Dimension currentSize = getSize();
     	  if (size.equals(currentSize)) {
     	      g.drawImage(carParkImage, 0, 0, null);
+    	      
     	  }
     	  else {
     	      // Rescale the previous image
@@ -66,15 +69,17 @@ public class CarParkView extends GeneralView {
         public void updateView() {
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
-                size = getSize();
-                carParkImage = this.createImage(size.width, size.height);
+        	size = getSize();
+                carParkImage = createImage(size.width, size.height);
+                
             }
             
             if(size == null) {
-        	System.out.println("Jos eet zijn brood niet op!!!");
+        	System.out.println("Size is null!");
             }
             else {
-            Graphics graphics = this.getGraphics();
+            Graphics graphics = carParkImage.getGraphics();
+           //drawTest(graphics, Color.MAGENTA);
             for(int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
                 for(int row = 0; row < simulatormodel.getNumberOfRows(); row++) {
                     for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
@@ -84,7 +89,7 @@ public class CarParkView extends GeneralView {
                         drawPlace(graphics, location, color);
                     }
                 }
-            }
+            } 
             repaint();
         }
         }
@@ -110,6 +115,30 @@ public class CarParkView extends GeneralView {
                     20 - 1,
                     10 - 1); // TODO use dynamic size or constants
         }
+        
+        public static void drawTest(Graphics graphics, Color color) {
+            graphics.setColor(Color.MAGENTA);
+            graphics.fillRect(0,0,400,400);
+            graphics.setColor(Color.CYAN);
+            graphics.fillOval(100, 0, 100, 100);
+            graphics.setColor(Color.ORANGE);
+            graphics.fillArc(100, 100, 100, 100, 100, 100);
+        }
+        
+        public void tick() {
+            for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+                for (int row = 0; row < getNumberOfRows(); row++) {
+                    for (int place = 0; place < getNumberOfPlaces(); place++) {
+                        Location location = new Location(floor, row, place);
+                        Car car = getCarAt(location);
+                        if (car != null) {
+                            car.tick();
+                        }
+                    }
+                }
+            }
+        }
+
         
     }
 

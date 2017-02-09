@@ -9,7 +9,7 @@ import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
 
 public class Main {
 
-	private Model simulatorModel;
+	private Model simulatormodel;
 	private CarParkView carparkview;
 	private JFrame screen;
 	private SimulatorController controller;
@@ -19,9 +19,9 @@ public class Main {
      */
 	public Main () {
 	screen = new JFrame();
-	simulatorModel = new Model(1, 1, 10);
-	controller = new SimulatorController(simulatorModel);
-    	carparkview = new CarParkView(simulatorModel,controller);
+	simulatormodel = new Model(1, 1, 10);
+	controller = new SimulatorController(simulatormodel);
+    	carparkview = new CarParkView(simulatormodel,controller);
     	screen.setSize(800, 600);
 	screen.setResizable(false);
 	screen.setLayout(null);
@@ -29,5 +29,6 @@ public class Main {
 	screen.getContentPane().add(carparkview);
 	carparkview.setBounds(0,0,800,600);
         screen.setVisible(true);
+	simulatormodel.run();
 	}
 }
