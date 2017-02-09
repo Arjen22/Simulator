@@ -29,6 +29,6 @@ public class Main {
 	screen.getContentPane().add(carparkview);
 	carparkview.setBounds(0,0,800,600);
         screen.setVisible(true);
-	simulatormodel.run(simulatormodel,controller);
+	simulatormodel.run(simulatormodel,controller,carparkview);
 	}
 }

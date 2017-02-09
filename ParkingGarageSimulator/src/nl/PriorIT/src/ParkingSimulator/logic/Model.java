@@ -61,10 +61,10 @@ public void handleEntrance(){
 	carsEntering(entranceCarQueue);  	
 }
 
-public void run(Model simulatormodel, SimulatorController controller) {
+public void run(Model simulatormodel, SimulatorController controller, CarParkView carparkview) {
     notifyViews();
     for (int i = 0; i < 1000000; i++) {
-        tick();
+        tick(carparkview);
     }
 }
 
@@ -268,9 +268,8 @@ private void carLeavesSpot(Car car){
         return null;
     }
 
-    private void tick() {
-    	
-	
+    private void tick(CarParkView carparkview) {
+    	this.carparkview = carparkview;
 	advanceTime();
     	handleExit();
     	updateViews(carparkview);
