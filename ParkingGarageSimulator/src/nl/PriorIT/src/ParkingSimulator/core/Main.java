@@ -19,16 +19,16 @@ public class Main {
      */
 	public Main () {
 	screen = new JFrame();
-	simulatormodel = new Model(1, 1, 10);
+	simulatormodel = new Model(3, 6, 60);
 	controller = new SimulatorController(simulatormodel);
     	carparkview = new CarParkView(simulatormodel,controller);
-    	screen.setSize(800, 600);
-	screen.setResizable(false);
+    	screen.setSize(1920, 1080);
+	screen.setResizable(true);
 	screen.setLayout(null);
 	screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	screen.getContentPane().add(carparkview);
 	carparkview.setBounds(0,0,800,600);
         screen.setVisible(true);
-	simulatormodel.run();
+	simulatormodel.run(simulatormodel,controller);
 	}
 }

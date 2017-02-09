@@ -6,6 +6,8 @@
 package nl.PriorIT.src.ParkingSimulator.logic;
 
 import java.util.Random;
+
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
 public class Model extends GeneralModel {
@@ -59,11 +61,10 @@ public void handleEntrance(){
 	carsEntering(entranceCarQueue);  	
 }
 
-public void run() {
-    carparkview = new CarParkView(this, controller);
-    carparkview.getModel();
+public void run(Model simulatormodel, SimulatorController controller) {
+    notifyViews();
     for (int i = 0; i < 1000000; i++) {
-        this.tick();
+        tick();
     }
 }
 
@@ -89,7 +90,8 @@ public void advanceTime(){
     }
 }
 
-public void updateViews(){
+public void updateViews(CarParkView carparkview){
+   this.carparkview = carparkview;
    carparkview.tick();
     // Update the car park view.
    carparkview.updateView();	
@@ -267,9 +269,11 @@ private void carLeavesSpot(Car car){
     }
 
     private void tick() {
-    	advanceTime();
+    	
+	
+	advanceTime();
     	handleExit();
-    	updateViews();
+    	updateViews(carparkview);
     	// Pause.
         try {
             Thread.sleep(tickPause);
