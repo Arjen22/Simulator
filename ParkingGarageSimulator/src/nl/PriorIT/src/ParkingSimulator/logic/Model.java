@@ -5,6 +5,7 @@
  */
 package nl.PriorIT.src.ParkingSimulator.logic;
 
+import java.awt.Color;
 import java.util.Random;
 
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
@@ -23,6 +24,7 @@ public class Model extends GeneralModel {
 	private int numberOfPlaces;
 	private int numberOfOpenSpots;
 	private Car[][][] cars;
+	private Location lastplace;
 
 	private int day = 0;
 	private int hour = 0;
@@ -53,6 +55,7 @@ public class Model extends GeneralModel {
 	    entrancePassQueue = new CarQueue();
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
+	    lastplace = new Location(0,2,6);
 	}
 
 public void handleEntrance(){
@@ -111,7 +114,7 @@ private void carsEntering(CarQueue queue){
 			getNumberOfOpenSpots()>0 && 
 			i<enterSpeed) {
         Car car = queue.removeCar();
-        Location freeLocation = getFirstFreeLocation();
+        Location freeLocation = getFirstFreeLocation(car.getColor());
         setCarAt(freeLocation, car);
         i++;
     }
@@ -239,11 +242,18 @@ private void carLeavesSpot(Car car){
         return car;
     }
 
-    public Location getFirstFreeLocation() {
+    public Location getFirstFreeLocation(Color color) {
+    	boolean firstime = true;
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
-                    Location location = new Location(floor, row, place);
+                    if(color != Color.blue && firstime == true) {
+                    	floor = lastplace.getFloor();
+                    	row = lastplace.getRow();
+                    	place = lastplace.getPlace();
+                    	firstime = false;
+                    }
+                	Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
                         return location;
                     }
