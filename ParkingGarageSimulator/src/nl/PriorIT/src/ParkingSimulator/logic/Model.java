@@ -42,10 +42,10 @@ public class Model extends GeneralModel {
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
 		this.numberOfFloors = numberOfFloors;
-        this.numberOfRows = numberOfRows;
-        this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
-        cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
+		this.numberOfRows = numberOfRows;
+		this.numberOfPlaces = numberOfPlaces;
+		this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+		cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 		
 		entranceCarQueue = new CarQueue();
 	    entrancePassQueue = new CarQueue();
@@ -60,8 +60,10 @@ public void handleEntrance(){
 }
 
 public void run() {
+    carparkview = new CarParkView(this, controller);
+    carparkview.getModel();
     for (int i = 0; i < 1000000; i++) {
-        tick();
+        this.tick();
     }
 }
 

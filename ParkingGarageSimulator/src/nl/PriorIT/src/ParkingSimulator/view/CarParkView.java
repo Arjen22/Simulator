@@ -9,8 +9,6 @@ import java.awt.Image;
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
-import nl.PriorIT.src.Parkingsimulator.Car;
-import nl.PriorIT.src.Parkingsimulator.Location;
 
 import javax.swing.JPanel;
 
@@ -94,19 +92,6 @@ public class CarParkView extends GeneralView {
         }
         }
         
-        public void tick() {
-        	simulatormodel.advanceTime();
-        	simulatormodel.handleExit();
-        	simulatormodel.updateViews();
-        	// Pause.
-            try {
-                Thread.sleep(tickPause);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        	simulatormodel.handleEntrance();
-        }
-        
         public static void drawPlace(Graphics graphics, Location location, Color color) {
             graphics.setColor(color);
             graphics.fillRect(
@@ -126,11 +111,11 @@ public class CarParkView extends GeneralView {
         }
         
         public void tick() {
-            for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-                for (int row = 0; row < getNumberOfRows(); row++) {
-                    for (int place = 0; place < getNumberOfPlaces(); place++) {
+            for (int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
+                for (int row = 0; row < simulatormodel.getNumberOfRows(); row++) {
+                    for (int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
                         Location location = new Location(floor, row, place);
-                        Car car = getCarAt(location);
+                        Car car = simulatormodel.getCarAt(location);
                         if (car != null) {
                             car.tick();
                         }
