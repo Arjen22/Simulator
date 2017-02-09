@@ -22,9 +22,11 @@ public class Model extends GeneralModel {
 	private int numberOfFloors;
 	private int numberOfRows;
 	private int numberOfPlaces;
+	private static int abboplekken;
 	private int numberOfOpenSpots;
 	private Car[][][] cars;
 	private Location lastplace;
+	private static int abboplek;
 
 	private int day = 0;
 	private int hour = 0;
@@ -44,7 +46,7 @@ public class Model extends GeneralModel {
         private int tickPause = 100;
 	
 
-	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
 		this.numberOfFloors = numberOfFloors;
 		this.numberOfRows = numberOfRows;
 		this.numberOfPlaces = numberOfPlaces;
@@ -56,8 +58,14 @@ public class Model extends GeneralModel {
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
 	    lastplace = new Location(0,2,6);
+	    
 	}
 
+	public static int getAbboPlekken(){
+    	abboplek = abboplekken;
+    	return abboplekken;
+    }
+	
 public void handleEntrance(){
 	carsArriving();
 	carsEntering(entrancePassQueue);

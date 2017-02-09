@@ -18,6 +18,8 @@ public class CarParkView extends GeneralView {
         private Image carParkImage;
         private Model simulatormodel;
         private GeneralController controller;
+		private int abboplekdraw;
+		public int getAbboPlekken;
     
         /**
          * Constructor for objects of class CarPark
@@ -63,7 +65,8 @@ public class CarParkView extends GeneralView {
         /**
          * Paint a place on this car park view in a given color.
          */
-
+        
+        
         public void updateView() {
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
@@ -78,12 +81,18 @@ public class CarParkView extends GeneralView {
             else {
             Graphics graphics = carParkImage.getGraphics();
            //drawTest(graphics, Color.MAGENTA);
+            int abboplekken = Model.getAbboPlekken();
             for(int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
                 for(int row = 0; row < simulatormodel.getNumberOfRows(); row++) {
                     for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
+						Color color = Color.white;
+                    	if(abboplekken > 0) {
+                    		color = Color.yellow;
+                    		abboplekken--;
+                    	}
                         Location location = new Location(floor, row, place);
                         Car car = simulatormodel.getCarAt(location);
-                        Color color = car == null ? Color.white : car.getColor();
+                        color = car == null ? color : car.getColor();
                         drawPlace(graphics, location, color);
                     }
                 }
