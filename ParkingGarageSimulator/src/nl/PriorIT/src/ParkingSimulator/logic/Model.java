@@ -261,6 +261,7 @@ private void carLeavesSpot(Car car){
                     	place = lastplace.getPlace();
                     	firstime = false;
                     }
+                    
                 	Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
                         return location;
