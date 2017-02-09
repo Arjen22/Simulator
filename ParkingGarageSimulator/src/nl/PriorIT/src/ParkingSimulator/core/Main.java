@@ -19,10 +19,10 @@ public class Main {
      */
 	public Main () {
 	screen = new JFrame();
-	simulatormodel = new Model(3, 6, 60);
+	simulatormodel = new Model(3, 6, 30);
 	controller = new SimulatorController(simulatormodel);
     	carparkview = new CarParkView(simulatormodel,controller);
-    	screen.setSize(1920, 1080);
+    	screen.setSize(960,540);
 	screen.setResizable(true);
 	screen.setLayout(null);
 	screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

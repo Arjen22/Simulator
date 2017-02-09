@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class NormalCar extends Car {
 
-	private static final Color COLOR=Color.CYAN;
+	private static final Color COLOR=Color.RED;
 	
     public NormalCar() {
     	Random random = new Random();
