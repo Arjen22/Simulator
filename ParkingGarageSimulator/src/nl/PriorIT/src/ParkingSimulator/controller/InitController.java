@@ -3,16 +3,18 @@ package nl.PriorIT.src.ParkingSimulator.controller;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class InitController extends JFrame {
+import nl.PriorIT.src.ParkingSimulator.logic.Model;
+
+public class InitController extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 8084081366423909672L;
 	private JTextField size;
 	private JTextField degree;
 	private JButton init;
 	
 	
-	public InitController(ParkingSimulatorLogic parkingSimulator) {
-		super(parkingSimulator);
-		setSize(90, 130);
+	public InitController(Model parkingSimulator) {
+		//super(parkingSimulator);
+		setSize(200, 300);
 		size=new JTextField();
 		degree=new JTextField();
 		init=new JButton("Init");
@@ -25,8 +27,16 @@ public class InitController extends JFrame {
 		size.setBounds(10, 10, 70, 30);
 		degree.setBounds(10, 50, 70, 30);
 		init.setBounds(10, 90, 70, 30);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		setVisible(true);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -22,12 +22,8 @@ public class CarParkView extends GeneralView {
     public CarParkView(Model simulatormodel, GeneralController controller) {
 	super(simulatormodel,controller);
 	builder = new CarParkViewBuilder(simulatormodel, controller);
+	this.add(builder);
 	  }
-    public void paintComponent(Graphics g) {
-  	  super.paintComponent(g);
-	  g.setColor(Color.WHITE);
-	  g.fillRect(0, 0, 800, 600);
-    }
     
     public static class drawPanel extends JPanel {
 

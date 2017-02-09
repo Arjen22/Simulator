@@ -6,9 +6,10 @@
 
 package nl.PriorIT.src.ParkingSimulator.logic;
 
-
 public class Model extends GeneralModel {
 	public Model () {
+		
+		
 	    
 	}
 }
