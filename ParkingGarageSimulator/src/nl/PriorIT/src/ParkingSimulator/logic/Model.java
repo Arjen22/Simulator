@@ -117,6 +117,18 @@ public class Model extends GeneralModel {
 		}
 	}
 
+	public int getMinutes() {		
+		return minute;
+	}
+	
+	public int getHours() {
+		return hour;
+	}
+	
+	public int getDays() {
+		return day;
+	}
+	
 	public void updateViews(CarParkView carparkview){
 		this.carparkview = carparkview;
 		carparkview.tick();
