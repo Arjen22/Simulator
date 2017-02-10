@@ -13,6 +13,7 @@ import nl.PriorIT.src.ParkingSimulator.logic.Model;
 import nl.PriorIT.src.ParkingSimulator.view.CarParkView;
 import nl.PriorIT.src.ParkingSimulator.view.CarParkView.drawPanel;
 import nl.PriorIT.src.ParkingSimulator.view.GeneralView;
+import nl.PriorIT.src.ParkingSimulator.view.TextView;
 
 public class SimulatorBuilder extends JFrame {
     
@@ -22,6 +23,7 @@ public class SimulatorBuilder extends JFrame {
     private Model simulatormodel;
     private SimulatorController controller;
     private InitController init;
+    private TextView textview;
     
     /**
      * Simulatorbuilder Constructor fits all the components together.
@@ -36,6 +38,7 @@ public class SimulatorBuilder extends JFrame {
 	simulatormodel = new Model();
 	controller = new SimulatorController(simulatormodel);
 	init = new InitController(simulatormodel);
+	textview = new TextView(simulatormodel);
 	
 	
 	

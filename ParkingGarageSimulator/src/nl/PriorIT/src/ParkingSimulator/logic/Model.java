@@ -12,4 +12,11 @@ public class Model extends GeneralModel {
 		
 	    
 	}
+
+	//test value
+	
+	public static int getNumberOfOpenSpots() {
+		
+		return 1;
+	}
 }
