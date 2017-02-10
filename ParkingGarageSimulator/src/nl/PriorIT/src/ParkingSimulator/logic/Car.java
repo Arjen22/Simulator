@@ -8,20 +8,28 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    private int totalMinutes;
 
     /**
      * Constructor for objects of class Car
      */
     public Car() {
-
     }
-
+    
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+    
+    public int getTotalMinutes() {
+    	return totalMinutes;
+    }
+    
+    public void setTotalMinutes(int totalMinutes) {
+    	this.totalMinutes = totalMinutes;
     }
 
     public int getMinutesLeft() {

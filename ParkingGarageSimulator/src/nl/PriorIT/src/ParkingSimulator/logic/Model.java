@@ -27,12 +27,16 @@ public class Model extends GeneralModel {
 	private Car[][][] cars;
 	private Location lastplace;
 	private static int abboplekken;
+	private static int abonnementen = 200;
 	Random random = new Random();
-
+	
+	private int week = 0;
 	private int day = 0;
 	private int hour = 0;
 	private int minute = 0;
-
+	private double totalMoney = 0.00;
+	
+	
 	int weekDayArrivals= 100; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
 	int weekDayPassArrivals= 50; // average number of arriving cars per hour
@@ -61,6 +65,8 @@ public class Model extends GeneralModel {
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
 	    lastplace = lastloc();
+	    
+	    totalMoney += abonnementen * 40;
 	    
 	}
 
@@ -114,7 +120,13 @@ public class Model extends GeneralModel {
 		}
 		while (day > 6) {
 			day -= 7;
+			week++;
+			totalMoney += abonnementen * 40;
 		}
+		while(week > 51) {
+			week -= 52;
+		}
+		System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
 	}
 
 	public void updateViews(CarParkView carparkview){
@@ -165,9 +177,17 @@ public class Model extends GeneralModel {
 	private void carsPaying(){
 		// Let cars pay.
 		int i=0;
+		
 		while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
 			Car car = paymentCarQueue.removeCar();
 			// TODO Handle payment.
+			// Bedragen voor de gewone auto's per uur: rood 3 per uur(0.05 per minuut)
+			// De abonementshouders betalen 40euro per week
+			// Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
+			if(car.getHasToPay()== true) {
+			totalMoney += car.getTotalMinutes() * 0.05;
+			}
+			//System.out.println("Total money earned is: "+ totalMoney);
 			carLeavesSpot(car);
 			i++;
 		}

@@ -19,7 +19,7 @@ public class Main {
      */
 	public Main () {
 	screen = new JFrame();
-	simulatormodel = new Model(3, 6, 30, 5);
+	simulatormodel = new Model(3, 6, 30, 125);
 	controller = new SimulatorController(simulatormodel);
     	carparkview = new CarParkView(simulatormodel,controller);
     	screen.setSize(960,540);
