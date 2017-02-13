@@ -126,7 +126,7 @@ public class Model extends GeneralModel {
 		while(week > 51) {
 			week -= 52;
 		}
-		System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
+		//System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
 	}
 
 	public int getMinutes() {		
@@ -139,6 +139,14 @@ public class Model extends GeneralModel {
 	
 	public int getDays() {
 		return day;
+	}
+	
+	public int getWeeks() {
+		return week;
+	}
+	
+	public double getMoney() {
+		return totalMoney;
 	}
 	
 	public void updateViews(CarParkView carparkview){
