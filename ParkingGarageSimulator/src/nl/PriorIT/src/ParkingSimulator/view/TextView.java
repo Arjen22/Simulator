@@ -12,7 +12,7 @@ public class TextView extends JFrame{
 	
 	public TextView(Model parkingSimulator) {
 		//super(parkingSimulator);
-		setSize(500, 800);
+		setSize(800, 500);
 		JPanel openSpot = new JPanel();
 		openSpot.add(openSpots);
 		add(openSpot);
