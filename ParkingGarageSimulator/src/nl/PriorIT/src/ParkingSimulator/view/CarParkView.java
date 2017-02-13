@@ -7,10 +7,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
-import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class CarParkView extends GeneralView {
@@ -18,17 +18,39 @@ public class CarParkView extends GeneralView {
         private Dimension size;
         private Image carParkImage;
         private Model simulatormodel;
-        private SimulatorController controller;
-        private int abboplekdraw;
-	public int getAbboPlekken;
+        private GeneralController controller;
+		private int abboplekdraw;
+		public int getAbboPlekken;
+		private JLabel openSpots = new JLabel("Free spots:");
+		private JLabel timeLabel = new JLabel("Time:");
     
         /**
          * Constructor for objects of class CarPark
          */
-        public CarParkView(Model simulatormodel, SimulatorController controller) {
+        public CarParkView(Model simulatormodel, GeneralController controller) {
             super(simulatormodel, controller);
             size = new Dimension(0,0);
             this.simulatormodel=simulatormodel;
+            
+            JPanel openSpot = new JPanel();
+    		openSpot.add(openSpots);
+    		add(openSpot);
+    		openSpots = new JLabel();
+    		
+    		add(openSpots);
+    		openSpots.setBounds(10, 10, 70, 30);
+    		
+    		JPanel time = new JPanel();
+    		time.add(timeLabel);
+    		add(timeLabel);
+    		timeLabel = new JLabel();
+    		
+    		add(timeLabel);
+    		timeLabel.setBounds(10, 30, 70, 30);
+    		
+
+    		setVisible(true);
+            
         }
     
        
@@ -69,6 +91,11 @@ public class CarParkView extends GeneralView {
         
         
         public void updateView() {
+        	
+        	openSpots.setText("There are " + String.valueOf(simulatormodel.getNumberOfOpenSpots()) + " open parking spots.");
+        	
+        	timeLabel.setText("week: "+ simulatormodel.getWeeks() + " day: "+ simulatormodel.getDays() +" hour: " + simulatormodel.getHours() +" minute: "+ simulatormodel.getMinutes() + " Money earned = €" + Math.round(simulatormodel.getMoney()));
+        	
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
         	size = getSize();
@@ -88,7 +115,7 @@ public class CarParkView extends GeneralView {
                     for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
 						Color color = Color.white;
                     	if(abboplekken > 0) {
-                    		color = Color.yellow;
+                    		color = Color.yellow; //abboplekken worden hier geel gemaakt
                     		abboplekken--;
                     	}
                         Location location = new Location(floor, row, place);
@@ -136,4 +163,3 @@ public class CarParkView extends GeneralView {
 
         
     }
-
