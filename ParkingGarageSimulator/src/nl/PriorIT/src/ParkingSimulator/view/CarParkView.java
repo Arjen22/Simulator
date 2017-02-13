@@ -115,7 +115,7 @@ public class CarParkView extends GeneralView {
                     for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
 						Color color = Color.white;
                     	if(abboplekken > 0) {
-                    		color = Color.yellow;
+                    		color = Color.yellow; //abboplekken worden hier geel gemaakt
                     		abboplekken--;
                     	}
                         Location location = new Location(floor, row, place);
