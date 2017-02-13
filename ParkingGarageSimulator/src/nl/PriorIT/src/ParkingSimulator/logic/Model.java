@@ -19,16 +19,17 @@ public class Model extends GeneralModel {
 	private CarQueue exitCarQueue;
 	private CarParkView carparkview;
 	
-	private int numberOfFloors;
-	private int numberOfRows;
-	private int numberOfPlaces;
-	private int numberOfOpenSpots;
-	private int numberOfSpots;
-	private Car[][][] cars;
-	private Location lastplace;
+	private static int numberOfFloors;
+	private static int numberOfRows;
+	private static int numberOfPlaces;
+	private static int numberOfOpenSpots;
+	private static int numberOfSpots;
+	private static Car[][][] cars;
+	private static Location lastplace;
 	private static int abboplekken;
 	private static int abonnementen = 200;
-	Random random = new Random();
+	private Random random;
+	
 	
 	private int week = 0;
 	private int day = 0;
@@ -37,18 +38,18 @@ public class Model extends GeneralModel {
 	private double totalMoney = 0.00;
 	
 	
-	int weekDayArrivals= 300; // average number of arriving cars per hour
+	int weekDayArrivals= 400; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
 	int weekDayPassArrivals= 50; // average number of arriving cars per hour
 	int weekendPassArrivals = 5; // average number of arriving cars per hour
 
-	int enterSpeed = 3; // number of cars that can enter per minute
+	int enterSpeed = 5; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 10;
+        private int tickPause = 100;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -65,6 +66,7 @@ public class Model extends GeneralModel {
 	    paymentCarQueue = new CarQueue();
 	    exitCarQueue = new CarQueue();
 	    lastplace = lastloc();
+	    random = new Random();
 	    
 	    totalMoney += abonnementen * 40;
 	    
@@ -164,7 +166,7 @@ public class Model extends GeneralModel {
 			Car car = queue.removeCar();
 			Location freeLocation = getFirstFreeLocation(car.getColor());
 			if (freeLocation == null) {
-				System.out.println("godwhy");
+				System.out.println("freeLocation is null");
 			}
 			setCarAt(freeLocation, car);
 			i++;
@@ -249,28 +251,28 @@ public class Model extends GeneralModel {
 		exitCarQueue.addCar(car);
 	}
     
-	public int getNumberOfFloors() {
+	public static int getNumberOfFloors() {
         return numberOfFloors;
     }
 
-    public int getNumberOfRows() {
+    public static int getNumberOfRows() {
         return numberOfRows;
     }
 
-    public int getNumberOfPlaces() {
+    public static int getNumberOfPlaces() {
         return numberOfPlaces;
     }
 
-    public int getNumberOfOpenSpots(){
+    public static int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
     
     
-    public Car getCarAt(Location location) {
+    public static Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
         }
-        return cars[location.getFloor()][location.getRow()][location.getPlace()];
+         return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
 
     public boolean setCarAt(Location location, Car car) {
@@ -299,95 +301,42 @@ public class Model extends GeneralModel {
         car.setLocation(null);
         numberOfOpenSpots++;
         return car;
-    }
-    
-    public int getFullGarage(boolean full) {
-    	int vrijeplekken = 0;
-    	boolean firsttime = full;
-    	
-    	checkofvolis:
-    	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
-            for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
-                	/*if(firsttime == false) {
-                		floor = lastplace.getFloor();
-                		row = lastplace.getRow();
-                		place = lastplace.getPlace();
-                		firsttime = true;
-                	}*/
-                	 //telt niet goed
-                	
-            		Location location = new Location(floor, row, place);
-            		
-                	if (getCarAt(location) != null) {
-                		vrijeplekken++;
-                	}
-                	
-                	if (full==false) { //als full false is dan telt die niet goed
-                		if(floor == lastplace.getFloor() && row == lastplace.getRow() && place == lastplace.getPlace()) {
-                			break checkofvolis;
-                		}
-                	}
-    			}
-    		}
-    	}
-    	return vrijeplekken;
-    }
-
-    /*public Location getFirstFreeLocation(Color color) {
-    	Location location = null;
-    	int floor;
-    	int row;
-    	int place;
-    	boolean full = getFullGarage(true) == abboplekken ? true : false;
-    	while (color == Color.blue && full == false && location == null) { //als de kleur blauw is en de abboplekken niet 
-    		floor = random.nextInt(numberOfFloors); //floor = willekeurig nieuwe vloer
-    		floor = floor <= lastplace.getFloor() ? floor : 3; //als floor gelijk is aan abboplek laatste floor
-    															//dan is het een willekeurige floor en anders floor 899
-    		row = floor < lastplace.getFloor() ? // als rij kleiner is dan laatsteplek floor
-    				random.nextInt(numberOfRows) : random.nextInt(lastplace.getRow()+1); 
-    				//dan random row, anders random row +1 vanaf laatste plek
-    		place = row  == lastplace.getRow() && floor == lastplace.getFloor() ? //als plaats gelijk is aan laatsteplek rij
-    				//en floor is gelijk aan laatsteplek floor
-    				random.nextInt(lastplace.getPlace()) : random.nextInt(numberOfPlaces);
-    		// dan willekeurig random int van place van lastplace abboplek anders een random nextint van numberofplaces
-        	if (floor != 10) { //als floor geen 10 is dan location=new location
-        		location = new Location(floor, row, place);
-        		location = getCarAt(location) == null ? location : null; //als er geen auto staat dan set location, anders is het null
-        	}
-    	}
-    	
-    	full = getFullGarage(false) == (numberOfSpots - abboplekken) ? true : false;
-    	while(full == false && location == null) {
-    		floor = random.nextInt(numberOfFloors - lastplace.getFloor()) + lastplace.getFloor();;
-    		row = floor == lastplace.getFloor() ?
-    				random.nextInt(numberOfRows - lastplace.getRow()) + lastplace.getRow() : random.nextInt(numberOfFloors) ;
-    		place = row == lastplace.getRow() && floor == lastplace.getFloor() ?
-    				random.nextInt(numberOfPlaces - lastplace.getPlace()) + lastplace.getPlace() : random.nextInt(numberOfPlaces);
-    		//bovenstaande is ook niet goed
-    		location = new Location(floor, row, place);
-    		location = getCarAt(location) == null ? location : null;
-    	}
-    	return location;
-    }
-*/
+    } 
     
 public Location getFirstFreeLocation(Color color) {
     	
+	Location location = null;
+	
+// boolean garageVol = isDeGarageVol(true) == abboplekken?true:false; //isDeGarageVol moet nog worden gemaakt die method
+// nog een methode maken voor als die vast loopt als die denkt dat die vol zit
+	
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
-                	if (color == Color.red) {
-                		if(floor <= lastplace.getFloor()) {
-                			floor = lastplace.getFloor();
-                			if(row <= lastplace.getRow()) {
-                				row = lastplace.getRow();
-                				if(place<= lastplace.getPlace()) {
-                					place = lastplace.getPlace();
-                				}                				            				
-                			}                				
-                		}
-                	} /*if(color == Color.green) { //reservation car!
+
+                	if (color == Color.red /*&& garageVol == true*/) {
+                		if(floor <= lastplace.getFloor() && floor <= getNumberOfFloors()) {
+                			int floor1 = lastplace.getFloor();
+                			int floor2 = numberOfFloors;
+                			//floor = floor1 + (int)(Math.random() * ((floor2 - floor1) + 1));
+                			floor = floor1; //random.nextInt(floor2);
+                			
+                		if(row <= lastplace.getRow() && row <= getNumberOfRows()) {
+                			int row1 = lastplace.getRow();
+                			int row2 =  getNumberOfRows();
+                			//row = row1 + (int)(Math.random() * ((row2 - row1) +1))-1;
+                			row = row1; //random.nextInt(row2);
+                		if(place<= lastplace.getPlace() && place <= getNumberOfPlaces()) {
+                			int place1 = lastplace.getPlace();
+                			int place2 =  getNumberOfPlaces();
+                			//place = place1 + (int)(Math.random() * ((place2 - place1) +1));
+                			place = place1; //random.nextInt(place2);
+                			}                				            				
+                		}                				
+                	}
+                }
+                	
+                	/*if(color == Color.green) { //reservation car!
                 		if(floor <= lastplace.getFloor()) {
                 			floor = lastplace.getFloor();
                 			if(row <= lastplace.getRow()) {
@@ -395,7 +344,7 @@ public Location getFirstFreeLocation(Color color) {
                 				if(place<= lastplace.getPlace()) {
                 					place = lastplace.getPlace();
                 	}*/
-                	Location location = new Location(floor, row, place);
+                	location = new Location(floor, row, place);
                     Location check = getCarAt(location) == null ? location : null;
                     if(check != null) {
                     	return location;
@@ -403,8 +352,10 @@ public Location getFirstFreeLocation(Color color) {
                 }
             }
         }
+       
         return null;
         }
+        
 
                 
     public Car getFirstLeavingCar() {
@@ -436,7 +387,7 @@ public Location getFirstFreeLocation(Color color) {
     	handleEntrance();
     }
 
-    private boolean locationIsValid(Location location) {
+    private static boolean locationIsValid(Location location) {
         int floor = location.getFloor();
         int row = location.getRow();
         int place = location.getPlace();
