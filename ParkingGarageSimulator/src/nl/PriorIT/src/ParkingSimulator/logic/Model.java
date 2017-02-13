@@ -48,7 +48,7 @@ public class Model extends GeneralModel {
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 10;
+        private int tickPause = 100;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -129,12 +129,18 @@ public class Model extends GeneralModel {
 		//System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
 	}
 
-	public int getMinutes() {		
-		return minute;
+	public String getMinutes() {		
+		
+		String text = (minute < 10 ? "0" : "") + minute;
+		return text;
+		
 	}
 	
-	public int getHours() {
-		return hour;
+	public String getHours() {
+
+		String text = (hour < 10 ? "0" : "") + hour;
+		return text;
+		
 	}
 	
 	public int getDays() {
