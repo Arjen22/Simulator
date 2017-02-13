@@ -128,19 +128,33 @@ public class Model extends GeneralModel {
 		while(week > 51) {
 			week -= 52;
 		}
-		System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
+		//System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
 	}
 
-	public int getMinutes() {		
-		return minute;
+	public String getMinutes() {		
+		
+		String text = (minute < 10 ? "0" : "") + minute;
+		return text;
+		
 	}
 	
-	public int getHours() {
-		return hour;
+	public String getHours() {
+
+		String text = (hour < 10 ? "0" : "") + hour;
+		return text;
+		
 	}
 	
 	public int getDays() {
 		return day;
+	}
+	
+	public int getWeeks() {
+		return week;
+	}
+	
+	public double getMoney() {
+		return totalMoney;
 	}
 	
 	public void updateViews(CarParkView carparkview){
