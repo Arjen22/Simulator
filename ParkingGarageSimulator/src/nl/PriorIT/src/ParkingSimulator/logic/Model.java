@@ -49,7 +49,7 @@ public class Model extends GeneralModel {
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 100;
+        private int tickPause = 1;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -67,6 +67,7 @@ public class Model extends GeneralModel {
 	    exitCarQueue = new CarQueue();
 	    lastplace = lastloc();
 	    random = new Random();
+	    
 	    
 	    totalMoney += abonnementen * 40;
 	    
@@ -179,11 +180,15 @@ public class Model extends GeneralModel {
 				i<enterSpeed) {
 			Car car = queue.removeCar();
 			Location freeLocation = getFirstFreeLocation(car.getColor());
-			if (freeLocation == null) {
-				System.out.println("freeLocation is null");
-			}
+			/*if(getNumberOfOpenSpots() == 0) {
+				floor = lastplace.getFloor();
+				row = lastplace.getRow();
+				place = lastplace.getPlace();
+			}*/
+			if (freeLocation != null) {
 			setCarAt(freeLocation, car);
 			i++;
+			}
 		}
 	}
 
@@ -317,34 +322,39 @@ public class Model extends GeneralModel {
         return car;
     } 
     
+    public int nextInt(int min, int max) {
+    	random = new Random();
+    	int locatie = random.nextInt(max - min);
+    	return locatie+min;
+    }
+
 public Location getFirstFreeLocation(Color color) {
     	
 	Location location = null;
-	
-// boolean garageVol = isDeGarageVol(true) == abboplekken?true:false; //isDeGarageVol moet nog worden gemaakt die method
-// nog een methode maken voor als die vast loopt als die denkt dat die vol zit
-	
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
 
-                	if (color == Color.red /*&& garageVol == true*/) {
+                	if (color == Color.red && floor <= getNumberOfFloors()) {
                 		if(floor <= lastplace.getFloor() && floor <= getNumberOfFloors()) {
                 			int floor1 = lastplace.getFloor();
-                			int floor2 = numberOfFloors;
-                			//floor = floor1 + (int)(Math.random() * ((floor2 - floor1) + 1));
-                			floor = floor1; //random.nextInt(floor2);
-                			
+                			int floor2 = getNumberOfFloors();
+                			//floor = floor1 + (int)(Math.random() * ((floor2 - floor1)+1));
+                			//floor = random.nextInt(floor2);
+                			floor = floor <= floor1 ? floor : -1;
+                			//floor = random.nextInt(floor2);
                 		if(row <= lastplace.getRow() && row <= getNumberOfRows()) {
                 			int row1 = lastplace.getRow();
                 			int row2 =  getNumberOfRows();
-                			//row = row1 + (int)(Math.random() * ((row2 - row1) +1))-1;
-                			row = row1; //random.nextInt(row2);
-                		if(place<= lastplace.getPlace() && place <= getNumberOfPlaces()) {
+                			//row = row1 + (int)(Math.random() * ((row2 - row1)+1));
+                			row = floor <floor1 ? random.nextInt(row2) : random.nextInt(row1+1);
+                			//row = random.nextInt(row2);
+                		if(place<= lastplace.getPlace()/* && place <= places*/) {
                 			int place1 = lastplace.getPlace();
-                			int place2 =  getNumberOfPlaces();
-                			//place = place1 + (int)(Math.random() * ((place2 - place1) +1));
-                			place = place1; //random.nextInt(place2);
+                			int place2 = getNumberOfPlaces();
+                			//place = place1 + (int)(Math.random() * ((place2 - place1)+1));
+                			place = row == row1 ? nextInt(place1,place2) : random.nextInt(place2);
+                			//place = random.nextInt(place2);
                 			}                				            				
                 		}                				
                 	}
