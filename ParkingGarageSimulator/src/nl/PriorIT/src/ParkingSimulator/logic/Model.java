@@ -301,11 +301,11 @@ public class Model extends GeneralModel {
         return car;
     }
     
-    public int getFullGarage(boolean penis) {
-    	int baby = 0;
-    	boolean firsttime = penis;
+    public int getFullGarage(boolean full) {
+    	int vrijeplekken = 0;
+    	boolean firsttime = full;
     	
-    	condom:
+    	checkofvolis:
     	for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
                 for (int place = 0; place < getNumberOfPlaces(); place++) {
@@ -316,21 +316,21 @@ public class Model extends GeneralModel {
                 		firsttime = true;
                 	} //telt niet goed
                 	
-            		Location vagina = new Location(floor, row, place);
+            		Location location = new Location(floor, row, place);
             		
-                	if (getCarAt(vagina) != null) {
-                		baby++;
+                	if (getCarAt(location) != null) {
+                		vrijeplekken++;
                 	}
                 	
-                	if (penis) { //als penis false is dan telt die niet goed
+                	if (full) { //als penis false is dan telt die niet goed
                 		if(floor == lastplace.getFloor() && row == lastplace.getRow() && place == lastplace.getPlace()) {
-                			break condom;
+                			break checkofvolis;
                 		}
                 	}
     			}
     		}
     	}
-    	return baby;
+    	return vrijeplekken;
     }
 
     public Location getFirstFreeLocation(Color color) {
