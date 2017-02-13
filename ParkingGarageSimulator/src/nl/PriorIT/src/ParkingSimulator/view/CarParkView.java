@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.*;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
@@ -17,14 +18,14 @@ public class CarParkView extends GeneralView {
         private Dimension size;
         private Image carParkImage;
         private Model simulatormodel;
-        private GeneralController controller;
+        private SimulatorController controller;
         private int abboplekdraw;
 	public int getAbboPlekken;
     
         /**
          * Constructor for objects of class CarPark
          */
-        public CarParkView(Model simulatormodel, GeneralController controller) {
+        public CarParkView(Model simulatormodel, SimulatorController controller) {
             super(simulatormodel, controller);
             size = new Dimension(0,0);
             this.simulatormodel=simulatormodel;
