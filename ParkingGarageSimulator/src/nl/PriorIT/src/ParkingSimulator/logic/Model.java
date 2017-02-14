@@ -383,7 +383,6 @@ return false;
     			}
     		}	
     	}
-    	
     	else {
     		int floor11 = lastplace.getFloor();
     		int floor22 = getNumberOfFloors();
