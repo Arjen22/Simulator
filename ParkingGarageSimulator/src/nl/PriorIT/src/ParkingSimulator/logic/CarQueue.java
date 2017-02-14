@@ -17,4 +17,7 @@ public class CarQueue {
     public int carsInQueue(){
     	return queue.size();
     }
+    public void setAutoBack(Car car) {
+    	((LinkedList<Car>) queue).addFirst(car);
+    }
 }
