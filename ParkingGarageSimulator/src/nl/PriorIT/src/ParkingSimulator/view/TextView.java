@@ -5,13 +5,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
-public class TextView extends JFrame{
+public class TextView extends GeneralView{
 
 	private static final long serialVersionUID = 8084081366423909672L;
 	private JLabel openSpots = new JLabel("Free spots:");
 	
-	public TextView(Model parkingSimulator) {
-		//super(parkingSimulator);
+	public TextView(Model simulatormodel) {
+		super(simulatormodel);
 		setSize(800, 500);
 		JPanel openSpot = new JPanel();
 		openSpot.add(openSpots);
@@ -20,9 +20,8 @@ public class TextView extends JFrame{
 		
 		add(openSpots);
 		openSpots.setBounds(10, 10, 70, 30);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		openSpots.setText("There are " + String.valueOf(Model.getNumberOfOpenSpots()) + " open parking spots.");
+
+		openSpots.setText("There are " + String.valueOf(simulatormodel.getOpenSpots()) + " open parking spots.");
 
 		setVisible(true);
 	}

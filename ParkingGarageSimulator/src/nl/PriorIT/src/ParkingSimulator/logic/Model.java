@@ -23,6 +23,7 @@ public class Model extends GeneralModel {
 	private static CarQueue paymentCarQueue;
 	private static CarQueue exitCarQueue;
 	private static CarParkView carparkview;
+	private Model simulatormodel;
 	
 	private int numberOfFloors;
 	private int numberOfRows;
@@ -121,7 +122,7 @@ public class Model extends GeneralModel {
 	public void run() {
 		notifyViews();
 		for (int i = 0; i < 100000; i++) {
-			tick();
+			simulatormodel.tick();
 		}
 	}
 	
@@ -179,7 +180,7 @@ public class Model extends GeneralModel {
 		}
 
 		
-		public void updateViews(){
+		public void updateViews(Model simulatormodel){
 			carparkview.tick();
 			// Update the car park view.
 			carparkview.updateView();	
