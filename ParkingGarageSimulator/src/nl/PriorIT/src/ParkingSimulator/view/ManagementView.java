@@ -3,7 +3,7 @@
  */
 package nl.PriorIT.src.ParkingSimulator.view;
 
-import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 /**
@@ -13,7 +13,7 @@ import nl.PriorIT.src.ParkingSimulator.logic.Model;
 public class ManagementView extends GeneralView {
     
     
-    public ManagementView(Model simulatormodel, GeneralController controller) {
-	super(simulatormodel, controller);
+    public ManagementView(Model simulatormodel) {
+	super(simulatormodel);
     }
 }

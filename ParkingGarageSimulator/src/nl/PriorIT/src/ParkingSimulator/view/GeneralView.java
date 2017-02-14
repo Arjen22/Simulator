@@ -8,16 +8,16 @@ package nl.PriorIT.src.ParkingSimulator.view;
 import javax.swing.JPanel;
 
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 public abstract class GeneralView extends JPanel {
     
     protected Model simulatormodel;
-    protected GeneralController controller;
 
-	public GeneralView(Model simulatormodel, GeneralController controller) {
+	public GeneralView(Model simulatormodel) {
 		this.simulatormodel=simulatormodel;
-		this.controller=controller;
+		System.out.println(simulatormodel);
 		simulatormodel.addView(this);
 	}
 	

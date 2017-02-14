@@ -5,66 +5,46 @@
  */
 package nl.PriorIT.src.ParkingSimulator.view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
-import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
+import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
+import nl.PriorIT.src.ParkingSimulator.logic.Car;
+import nl.PriorIT.src.ParkingSimulator.logic.Location;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 public class CarParkViewBuilder extends ViewBuilder {
 
     private static final long serialVersionUID = -6177925059239806757L;
 
-    public CarParkViewBuilder(Model simulatormodel, GeneralController controller) {
-	super(simulatormodel, controller);
-	new BorderLayout();
-	JTabbedPane SimulatorPane = new JTabbedPane(); 
-	JPanel buttonrow = new JPanel();
-	
-	//Use default FlowLayout.	
-	buttonrow.add(this.createButtonRow(true));
-	SimulatorPane.addTab("SimulatorView", buttonrow);
-	JPanel buttonrow2 = new JPanel();
-	buttonrow2.add(this.createButtonRow(false));
-	buttonrow2.add(this.createButtonRow(true));
-	SimulatorPane.addTab("ManagementView", buttonrow2);
-	 
-	//Add tabbedPane to this panel.
-	add(SimulatorPane, BorderLayout.CENTER);
+
+    public CarParkViewBuilder() {
 	
     }
+    
+    
+    /**
+     * Paint a place on this car park view in a given color.
+     */
+    
+    public static void drawTest(Graphics graphics, Color color) {
+        graphics.setColor(Color.MAGENTA);
+        graphics.fillRect(0,0,400,400);
+        graphics.setColor(Color.CYAN);
+        graphics.fillOval(100, 0, 100, 100);
+        graphics.setColor(Color.ORANGE);
+        graphics.fillArc(100, 100, 100, 100, 100, 100);
+    }
+    
 
-
-    public JPanel createButtonRow(boolean changeAlignment) {
-        JButton button1 = new JButton("Start Simulatie");
-        button1.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button1.setHorizontalTextPosition(AbstractButton.CENTER);
- 
-        JButton button2 = new JButton("Stop Simulatie");
-        button2.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button2.setHorizontalTextPosition(AbstractButton.CENTER);
- 
-        String title;
-        if (changeAlignment) {
-            title = "Simulatie Beheer";
-            button1.setAlignmentY(BOTTOM_ALIGNMENT);
-            button2.setAlignmentY(BOTTOM_ALIGNMENT);
-        } else {
-            title = "Test";
-        } 
- 
-        JPanel pane = new JPanel();
-        pane.setBorder(BorderFactory.createTitledBorder(title));
-        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
-        pane.add(button1);
-        pane.add(button2);
-        return pane;
-    } 
 
 }
