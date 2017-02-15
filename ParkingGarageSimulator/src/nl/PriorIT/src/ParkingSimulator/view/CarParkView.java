@@ -23,6 +23,7 @@ public class CarParkView extends GeneralView {
 		public int getAbboPlekken;
 		private JLabel openSpots = new JLabel("Free spots:");
 		private JLabel timeLabel = new JLabel("Week:");
+		private JLabel bezetting = new JLabel("BezettingsGraad: ");
     
         /**
          * Constructor for objects of class CarPark
@@ -47,6 +48,14 @@ public class CarParkView extends GeneralView {
     		
     		add(timeLabel);
     		timeLabel.setBounds(10, 30, 70, 30);
+    		
+    		JPanel bezettingsGraad = new JPanel();
+    		bezettingsGraad.add(bezetting);
+    		add(bezettingsGraad);
+    		bezetting = new JLabel();
+    		
+    		add(bezetting);
+    		bezetting.setBounds(10, 10, 70, 30);
     		
 
     		setVisible(true);
@@ -95,6 +104,8 @@ public class CarParkView extends GeneralView {
         	openSpots.setText("There are " + String.valueOf(simulatormodel.getNumberOfOpenSpots()) + " open parking spots.");
         	
         	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " + simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" + Math.round(simulatormodel.getMoney()));
+        	
+        	bezetting.setText(simulatormodel.getPercent() + "%");
         	
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {

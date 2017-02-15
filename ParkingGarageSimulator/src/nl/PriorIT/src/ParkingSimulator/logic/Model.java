@@ -7,6 +7,7 @@ package nl.PriorIT.src.ParkingSimulator.logic;
 
 import java.awt.Color;
 import java.util.Random;
+import java.text.DecimalFormat;
 
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.view.*;
@@ -23,6 +24,7 @@ public class Model extends GeneralModel {
 	private static int numberOfRows;
 	private static int numberOfPlaces;
 	private static int numberOfOpenSpots;
+	private static int numberOfSpots;
 	private static Car[][][] cars;
 	private static Location lastplace;
 	private static int abboplekken;
@@ -34,20 +36,21 @@ public class Model extends GeneralModel {
 	private int hour = 0;
 	private int minute = 0;
 	private double totalMoney = 0.00;
+	double percent;
 	
 	
-	int weekDayArrivals= 300; // average number of arriving cars per hour
+	int weekDayArrivals= 100; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
-	int weekDayPassArrivals= 50; // average number of arriving cars per hour
+	int weekDayPassArrivals= 0; // average number of arriving cars per hour
 	int weekendPassArrivals = 5; // average number of arriving cars per hour
 
-	int enterSpeed = 5; // number of cars that can enter per minute
+	int enterSpeed = 3; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 50;
+        private int tickPause = 40;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -56,6 +59,7 @@ public class Model extends GeneralModel {
 		Model.numberOfPlaces = numberOfPlaces;
 		Model.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
 		Model.abboplekken = abboplekken;
+		numberOfSpots = numberOfOpenSpots;
 		cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 		
 		entranceCarQueue = new CarQueue();
@@ -64,6 +68,7 @@ public class Model extends GeneralModel {
 	    exitCarQueue = new CarQueue();
 	    lastplace = lastloc();
 	    random = new Random();
+	    weekDayPassArrivals = abonnementen;
 	    
 	    
 	    totalMoney += abonnementen * 40;
@@ -136,6 +141,31 @@ public class Model extends GeneralModel {
 		
 	}
 	
+
+	
+	public double getPerc() { //telt niet goed, even kijken hoe
+		double vloer = getNumberOfFloors();
+		double rij = getNumberOfRows();
+		double plaats = getNumberOfPlaces();
+		
+		double totaal = numberOfSpots;
+		int NogOver =  numberOfOpenSpots;
+		double Bezet = numberOfSpots - numberOfOpenSpots;
+		percent =(Bezet/totaal)*100;
+		return percent;
+	}
+	
+	public String getPercent() {
+		DecimalFormat df = new DecimalFormat("0.##");
+		String antwoord = df.format(getPerc());
+		return antwoord;
+	}
+	
+	private int toFixed(int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	public String getHours() {
 
 		String text = (hour < 10 ? "0" : "") + hour;
