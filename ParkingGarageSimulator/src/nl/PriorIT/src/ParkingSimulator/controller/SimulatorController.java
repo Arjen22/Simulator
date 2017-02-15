@@ -7,7 +7,10 @@ package nl.PriorIT.src.ParkingSimulator.controller;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 public class SimulatorController extends GeneralController {
-    
+    /**
+     * constructor simulatorcontroller
+     * @param simulatormodel
+     */
     public SimulatorController(Model simulatormodel) {
 	super(simulatormodel);
     }

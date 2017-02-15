@@ -9,24 +9,36 @@ import javax.swing.JPanel;
 
 import nl.PriorIT.src.ParkingSimulator.controller.GeneralController;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
-
+/**
+ * Hiermee worden de fields gedefined
+ */
 public abstract class GeneralView extends JPanel {
     
     protected Model simulatormodel;
     protected GeneralController controller;
     protected ChartView piechart;
-
+    /**
+     * de constructor van GeneralView
+     * @param simulatormodel
+     * @param controller
+     * @param piechart
+     */
 	public GeneralView(Model simulatormodel, GeneralController controller, ChartView piechart) {
 		this.simulatormodel=simulatormodel;
 		this.controller=controller;
 		this.piechart = piechart;
 		simulatormodel.addView(this);
 	}
-	
+	/**
+	 * dit returned het model
+	 * @return
+	 */
 	public Model getModel() {
 		return simulatormodel;
 	}
-	
+	/**
+	 * deze update de generalview
+	 */
 	public void updateView() {
 		repaint();
 	}

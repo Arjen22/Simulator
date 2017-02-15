@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import nl.PriorIT.src.ParkingSimulator.logic.Car;
 import nl.PriorIT.src.ParkingSimulator.logic.Location;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
-
+/**
+ * hier worden de fields gedefined
+ */
 public class ChartView extends JPanel{
 	
 	private JLabel totalCars = new JLabel();
@@ -22,7 +24,9 @@ public class ChartView extends JPanel{
 	private int red;
 	private Image piechart;
 	private Dimension size;
-	
+	/**
+	 * constructor van chartview
+	 */
 	public ChartView() {
 		
     	add(new JLabel("Number of cars: "));
@@ -36,13 +40,18 @@ public class ChartView extends JPanel{
 	}
 	
 	
-	
+	/**
+	 * hiermee set je de size van de chartview
+	 * @return
+	 */
 	public Dimension setSizePieChart() {
 		
-		return new Dimension(600, 600);
+		return new Dimension(500, 500);
 		
 	}
-	
+	/**
+	 * hiermee teken je de chartview, het gebied waar die in komt
+	 */
 	public void paintComponent(Graphics g) {
 
 			if (piechart == null) {
@@ -58,7 +67,9 @@ public class ChartView extends JPanel{
 				g.drawImage(piechart, 0, 0, currentSize.width, currentSize.height, null);
 			}
         }
-	
+	/**
+	 * hiermee zorg je dat de view update
+	 */
 	public void updateView() {
 		int blue = 0;
 		int red = 0;
@@ -86,7 +97,10 @@ public class ChartView extends JPanel{
 	}
 	
 
-	
+	/**
+	 * hiermee teken je de cirkel
+	 * @param graphics
+	 */
 	private void drawcircle(Graphics graphics) {
 
         int maxAmount=(Model.getNumberOfPlaces()*Model.getNumberOfFloors()*Model.getNumberOfRows());
@@ -108,13 +122,19 @@ public class ChartView extends JPanel{
            
 	}
 	
-	
+	/**
+	 * hiermee worden de hoeveelheid rood en blauwe geset
+	 * @param numberBlue
+	 * @param numberRed
+	 */
 	public void setNumbers(int numberBlue, int numberRed) {
 		
 		this.blue = numberBlue;
-		this.red = numberRed;
-		
+		this.red = numberRed;	
 	}
+	/**
+	 * update de JPanels
+	 */
 	public void update() {
 		totalCars.setText(String.valueOf(Model.getNumberOfPlaces()*Model.getNumberOfFloors()*Model.getNumberOfRows()-Model.getNumberOfOpenSpots()));
         blueCars.setText(String.valueOf(blue));
