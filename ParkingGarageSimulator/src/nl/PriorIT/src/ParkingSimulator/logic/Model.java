@@ -58,6 +58,7 @@ public class Model extends GeneralModel {
 		Model.numberOfRows = numberOfRows;
 		Model.numberOfPlaces = numberOfPlaces;
 		Model.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+		numberOfSpots = numberOfOpenSpots;
 		Model.abboplekken = abboplekken;
 		numberOfSpots = numberOfOpenSpots;
 		cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
@@ -131,7 +132,6 @@ public class Model extends GeneralModel {
 		while(week > 51) {
 			week -= 52;
 		}
-		//System.out.println("advanceTime: "+"week: "+ week + " day: "+ day +" hour: " + hour +" minute: "+ minute+ " Money earned = " + Math.round(totalMoney));
 	}
 
 	public String getMinutes() {		
@@ -206,12 +206,11 @@ public class Model extends GeneralModel {
 				i<enterSpeed) {
 			Car car = queue.removeCar();
 			Location freeLocation = null;
-			int test = 0;
+			int checkingSpots = 0;
 			while(freeLocation == null) {
 				freeLocation = getFirstFreeLocation(car.getColor());
-				test++;
-				//System.out.println(test);
-				if (test == 10) {
+				checkingSpots++;
+				if (checkingSpots == numberOfSpots-abboplekken) {
 					break;
 				}
 			}
@@ -254,7 +253,6 @@ public class Model extends GeneralModel {
 			if(car.getHasToPay()== true) {
 			totalMoney += car.getTotalMinutes() * 0.05;
 			}
-			//System.out.println("Total money earned is: "+ totalMoney);
 			carLeavesSpot(car);
 			i++;
 		}
@@ -385,7 +383,7 @@ public class Model extends GeneralModel {
 			}
 		}
     }
-System.out.println(openAbboPlekken);
+
     if(openAbboPlekken == 0) {
 		return true;
 	}else {
@@ -434,7 +432,6 @@ return false;
     
     	Location location = new Location(floor, row, place);
     	Location check = getCarAt(location) == null ? location : null;
-    	//System.out.println("Check: " + check);
     	if(check != null) {
     		return location;
     	}

@@ -101,7 +101,7 @@ public class CarParkView extends GeneralView {
         
         public void updateView() {
         	
-        	openSpots.setText("There are " + String.valueOf(simulatormodel.getNumberOfOpenSpots()) + " open parking spots.");
+        	openSpots.setText(String.valueOf(simulatormodel.getNumberOfOpenSpots()) + " open parking spots.");
         	
         	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " + simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" + Math.round(simulatormodel.getMoney()));
         	
