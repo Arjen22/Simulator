@@ -23,7 +23,10 @@ public class CarParkView extends GeneralView {
 		public int getAbboPlekken;
 		private JLabel openSpots = new JLabel("Free spots:");
 		private JLabel timeLabel = new JLabel("Week:");
-    
+		private JLabel bezetting = new JLabel("BezettingsGraad: ");
+		private JLabel carQueue = new JLabel("CarQueueLength: ");
+		private JLabel carQueuePass = new JLabel("CarQueuePassLength: ");
+		
         /**
          * Constructor for objects of class CarPark
          */
@@ -47,6 +50,30 @@ public class CarParkView extends GeneralView {
     		
     		add(timeLabel);
     		timeLabel.setBounds(10, 30, 70, 30);
+    		
+    		JPanel bezettingsGraad = new JPanel();
+    		bezettingsGraad.add(bezetting);
+    		add(bezettingsGraad);
+    		bezetting = new JLabel();
+    		
+    		add(bezetting);
+    		bezetting.setBounds(10, 10, 70, 30);
+    		
+    		JPanel carQueueLength = new JPanel();
+    		carQueueLength.add(openSpots);
+    		add(carQueueLength);
+    		carQueue = new JLabel();
+    		
+    		add(carQueue);
+    		carQueue.setBounds(10, 10, 70, 30);
+    		
+    		JPanel carQueuePassLength = new JPanel();
+    		carQueuePassLength.add(openSpots);
+    		add(carQueuePassLength);
+    		carQueuePass = new JLabel();
+    		
+    		add(carQueuePass);
+    		carQueuePass.setBounds(10, 10, 70, 30);
     		
 
     		setVisible(true);
@@ -98,6 +125,12 @@ public class CarParkView extends GeneralView {
         	+ simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" 
         	+ Math.round(simulatormodel.getMoney()) + "  Earned today: €" + Math.round(simulatormodel.getMoneyToday())
         	+ "  Expected money today: €" + Math.round(simulatormodel.getExpectedMoney()));
+        	
+        	bezetting.setText(simulatormodel.getPercent() + "%");
+        	
+        	carQueue.setText("CarQueue: "+simulatormodel.getQueueSize());
+        	
+        	carQueuePass.setText("CarQueuePass: "+simulatormodel.getQueueSizePass());
         	
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {

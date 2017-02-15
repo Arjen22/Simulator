@@ -7,6 +7,7 @@ package nl.PriorIT.src.ParkingSimulator.logic;
 
 import java.awt.Color;
 import java.util.Random;
+import java.text.DecimalFormat;
 
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.view.*;
@@ -38,19 +39,21 @@ public class Model extends GeneralModel {
 	private double moneyToday = 0.00;
 	private double expectedMoney = 0.00;	
 	private static int totalMinutes = 0;
-	
-	int weekDayArrivals= 125; // average number of arriving cars per hour
+	double percent;
+
+	int weekDayArrivals= 100; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
 	int weekDayPassArrivals= abonnementen/4; // average number of arriving cars per hour
 	int weekendPassArrivals = abonnementen/8; // average number of arriving cars per hour
 
-	int enterSpeed = 5; // number of cars that can enter per minute
+	int enterSpeed = 3; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 100;
+	private int tickPause = 100;
+
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
 		Model.numberOfFloors = numberOfFloors;
@@ -59,6 +62,7 @@ public class Model extends GeneralModel {
 		Model.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
 		numberOfSpots = numberOfOpenSpots;
 		Model.abboplekken = abboplekken;
+		numberOfSpots = numberOfOpenSpots;
 		cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
 		
 		entranceCarQueue = new CarQueue();
@@ -141,6 +145,18 @@ public class Model extends GeneralModel {
 		
 	}
 	
+	public double getPerc() {
+		double totaal = numberOfSpots;
+		double Bezet = numberOfSpots - numberOfOpenSpots;
+		percent =(Bezet/totaal)*100;
+		return percent;
+	}	
+	public String getPercent() {
+		DecimalFormat df = new DecimalFormat("0.##");
+		String antwoord = df.format(getPerc());
+		return antwoord;
+	}
+
 	public String getHours() {
 
 		String text = (hour < 10 ? "0" : "") + hour;
@@ -166,6 +182,16 @@ public class Model extends GeneralModel {
 	
 	public double getExpectedMoney() {
 		return expectedMoney;
+	}
+	
+	public int getQueueSize() {
+		int grootte = entranceCarQueue.carsInQueue();
+		return grootte;
+	}
+	
+	public int getQueueSizePass() {
+		int grootte = entrancePassQueue.carsInQueue();
+		return grootte;
 	}
 	
 	public void updateViews(CarParkView carparkview){
