@@ -24,7 +24,7 @@ public class Main {
 	simulatormodel = new Model(3, 6, 30, 140);
 	controller = new SimulatorController(simulatormodel);
     	carparkview = new CarParkView(simulatormodel,controller,piechart);
-    	screen.setSize(1000,800);
+    	screen.setSize(1498,761);
 	screen.setResizable(true);
 	screen.setLayout(null);
 	screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

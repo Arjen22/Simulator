@@ -208,16 +208,14 @@ public class Model extends GeneralModel {
 		if(hour >= 0 && hour< 6) {
 			weekDayArrivals= 50;
 			weekendArrivals = 80;
-			weekDayPassArrivals = 20;
-			weekendPassArrivals = 10;
-			//weekDayPassArrivals = weekDayPassArrivals/4;
-			//weekendPassArrivals = weekendPassArrivals/4;
+			weekDayPassArrivals = 30;
+			weekendPassArrivals = 20;
 		}
 		else if(hour >= 17 && hour < 0 ) {
 			weekDayArrivals = 90;
 			weekendArrivals = 190;
-			weekDayPassArrivals = 20;
-			weekendPassArrivals = 15;
+			weekDayPassArrivals = 40;
+			weekendPassArrivals = 25;
 		}
 		
 		else {
