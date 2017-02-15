@@ -35,12 +35,14 @@ public class Model extends GeneralModel {
 	private int hour = 0;
 	private int minute = 0;
 	private double totalMoney = 0.00;
+	private double moneyToday = 0.00;
+	private double expectedMoney = 0.00;	
+	private static int totalMinutes = 0;
 	
-	
-	int weekDayArrivals= 300; // average number of arriving cars per hour
+	int weekDayArrivals= 125; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
-	int weekDayPassArrivals= 50; // average number of arriving cars per hour
-	int weekendPassArrivals = 5; // average number of arriving cars per hour
+	int weekDayPassArrivals= abonnementen/4; // average number of arriving cars per hour
+	int weekendPassArrivals = abonnementen/8; // average number of arriving cars per hour
 
 	int enterSpeed = 5; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
@@ -48,8 +50,7 @@ public class Model extends GeneralModel {
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 50;
-	
+        private int tickPause = 100;
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
 		Model.numberOfFloors = numberOfFloors;
@@ -69,6 +70,7 @@ public class Model extends GeneralModel {
 	    
 	    
 	    totalMoney += abonnementen * 40;
+	    moneyToday += abonnementen * 40;
 	    
 	}
 
@@ -119,11 +121,13 @@ public class Model extends GeneralModel {
 		while (hour > 23) {
 			hour -= 24;
 			day++;
+			moneyToday = 0;
 		}
 		while (day > 6) {
 			day -= 7;
 			week++;
 			totalMoney += abonnementen * 40;
+			moneyToday += abonnementen * 40;
 		}
 		while(week > 51) {
 			week -= 52;
@@ -154,6 +158,14 @@ public class Model extends GeneralModel {
 	
 	public double getMoney() {
 		return totalMoney;
+	}
+	
+	public double getMoneyToday() {
+		return moneyToday;
+	}
+	
+	public double getExpectedMoney() {
+		return expectedMoney;
 	}
 	
 	public void updateViews(CarParkView carparkview){
@@ -193,6 +205,7 @@ public class Model extends GeneralModel {
 			else {
 				setCarAt(freeLocation, car);
 				i++;
+				totalMinutes += car.getTotalMinutes();
 			}
 			
 		}
@@ -224,7 +237,12 @@ public class Model extends GeneralModel {
 			// Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
 			if(car.getHasToPay()== true) {
 			totalMoney += car.getTotalMinutes() * 0.05;
+			if(hour >=0 &&(hour <= 23 && minute <= 59)) {
+			moneyToday += car.getTotalMinutes() * 0.05;
 			}
+			}
+			totalMinutes -= car.getTotalMinutes();
+			expectedMoney = totalMinutes*0.05;
 			carLeavesSpot(car);
 			i++;
 		}
@@ -332,6 +350,25 @@ public class Model extends GeneralModel {
     	return locatie+min;
     }
 
+    public int checkNormGarage() {
+    	int numberOfNormCars = 0;
+    	for(int floor = lastplace.getFloor(); floor <= getNumberOfFloors(); floor++){
+    			for(int row = floor == lastplace.getFloor() ? lastplace.getRow() : 0; row < getNumberOfRows() ; row++) {
+    				for(int place = floor == lastplace.getFloor() && row == lastplace.getRow() ? lastplace.getPlace() : 0; place < getNumberOfPlaces() ; place++) {
+        				Location location = new Location(floor, row, place);
+        				//System.out.println(location);
+        				if(getCarAt(location) != null){
+        					numberOfNormCars++;
+        				}
+        				
+        			}
+    			}    		
+    	}
+    	//System.out.println(numberOfNormCars);
+		return numberOfNormCars;
+    	
+    }
+    
     public boolean checkAbboGarage() {//kijkt of abboplekken = vol dan blauwe autos op rode plekken(true) anders false
 	int openAbboPlekken=abboplekken;
     for (int floor = 0; floor <= lastplace.getFloor(); floor++) {
@@ -340,7 +377,7 @@ public class Model extends GeneralModel {
 			if (row == lastplace.getRow()) {
 				for (int place = 0; place < lastplace.getPlace(); place++) {
 					Location location = new Location(floor, row, place);
-					if(getCarAt(location) != null) { //als lastplace leeg is
+					if(getCarAt(location) != null) { 
 						openAbboPlekken--;
 					}
 				}
@@ -348,7 +385,7 @@ public class Model extends GeneralModel {
 			else {
 				for (int place = 0; place < getNumberOfPlaces(); place++) {
 					Location location = new Location(floor, row, place);
-					if(getCarAt(location) != null) { //als lastplace leeg is
+					if(getCarAt(location) != null) {
 						openAbboPlekken--;
 					}
 				}
@@ -356,11 +393,10 @@ public class Model extends GeneralModel {
 		}
     }
 
-    if(openAbboPlekken == 0) {
-		return true;
-	}else {
-return false;
-	}
+		if(openAbboPlekken == 0) {
+				return true;
+		}
+		else {return false;}			
     }
     
     public Location getFirstFreeLocation(Color color) {

@@ -92,9 +92,12 @@ public class CarParkView extends GeneralView {
         
         public void updateView() {
         	
-        	openSpots.setText(String.valueOf(simulatormodel.getNumberOfOpenSpots()) + " open parking spots.");
+        	openSpots.setText(String.valueOf(simulatormodel.getNumberOfOpenSpots()));
         	
-        	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " + simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" + Math.round(simulatormodel.getMoney()));
+        	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " 
+        	+ simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" 
+        	+ Math.round(simulatormodel.getMoney()) + "  Earned today: €" + Math.round(simulatormodel.getMoneyToday())
+        	+ "  Expected money today: €" + Math.round(simulatormodel.getExpectedMoney()));
         	
             // Create a new car park image if the size has changed.
             if (!size.equals(getSize())) {
@@ -110,9 +113,9 @@ public class CarParkView extends GeneralView {
             Graphics graphics = carParkImage.getGraphics();
            //drawTest(graphics, Color.MAGENTA);
             int abboplekken = Model.getAbboPlekken();
-            for(int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
-                for(int row = 0; row < simulatormodel.getNumberOfRows(); row++) {
-                    for(int place = 0; place < simulatormodel.getNumberOfPlaces(); place++) {
+            for(int floor = 0; floor < Model.getNumberOfFloors(); floor++) {
+                for(int row = 0; row < Model.getNumberOfRows(); row++) {
+                    for(int place = 0; place < Model.getNumberOfPlaces(); place++) {
 						Color color = Color.white;
                     	if(abboplekken > 0) {
                     		color = Color.yellow; //abboplekken worden hier geel gemaakt
