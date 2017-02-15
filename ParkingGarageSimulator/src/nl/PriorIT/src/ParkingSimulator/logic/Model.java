@@ -153,8 +153,7 @@ public class Model extends GeneralModel {
 		double Bezet = numberOfSpots - numberOfOpenSpots;
 		percent =(Bezet/totaal)*100;
 		return percent;
-	}
-	
+	}	
 	public String getPercent() {
 		DecimalFormat df = new DecimalFormat("0.##");
 		String antwoord = df.format(getPerc());
