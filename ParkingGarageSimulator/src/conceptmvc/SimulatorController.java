@@ -7,14 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class SimulatorController extends AbstractController implements ActionListener  {
-    private Model simulatormodel;
+    	private Model simulatormodel;
 	private JButton buttonPlusOne;
 	private JButton buttonPlusHunderd;
 	private JButton startPause;
-	private ImageIcon pause;
-	private ImageIcon start;
-	private ImageIcon plus;
-	private ImageIcon plus100;
 	public static boolean runs;
     
     public SimulatorController(Model simulatormodel) {
@@ -24,13 +20,13 @@ public class SimulatorController extends AbstractController implements ActionLis
 	runs = true;
 
 		
-		buttonPlusOne = new JButton(plus);
+		buttonPlusOne = new JButton();
 		buttonPlusOne.setToolTipText("Simuleer 1 minuut");
 
-		buttonPlusHunderd = new JButton(plus100);
+		buttonPlusHunderd = new JButton();
 		buttonPlusHunderd.setToolTipText("Simuleer 100 minuten");
 		
-		startPause = new JButton(pause);
+		startPause = new JButton();
 		startPause.setToolTipText("Start/Pause simulation");
 
 		buttonPlusOne.addActionListener(this);
@@ -55,10 +51,10 @@ public class SimulatorController extends AbstractController implements ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if ("Plus1".equals(e.getActionCommand())) {
 			runs=false;
-			simulatormodel.simulateByMinute(1);
+			Model.simulateByMinute(1);
 		} else if ("Plus100".equals(e.getActionCommand())) {
 			runs=false;
-			simulatormodel.simulateByMinute(100);
+			Model.simulateByMinute(100);
 		} else if("StartPause".equals(e.getActionCommand())){
 			if(runs){
 				runs=false;

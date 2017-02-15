@@ -170,7 +170,7 @@ public class Model extends AbstractModel {
 
 		
 		public static void updateViews(){
-			cpview.tick();
+			CarParkViewmvc.tick();
 			// Update the car park view.
 			cpview.updateView();	
 		}

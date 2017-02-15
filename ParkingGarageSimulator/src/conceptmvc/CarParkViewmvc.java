@@ -12,13 +12,13 @@ import javax.swing.JPanel;
 public class CarParkViewmvc extends AbstractView {
     
     private static final long serialVersionUID = 5085977141273471393L;
-    private Dimension size;
-    private Image carParkImage;
-    private Model simulatormodel;
-    private int abboplekdraw;
-    public int getAbboPlekken;
-    private JLabel openSpots = new JLabel("Free spots:");
-    private JLabel timeLabel = new JLabel("Time:");
+    private  Dimension size;
+    private static Image carParkImage;
+    private static Model simulatormodel;
+    private static int abboplekdraw;
+    public static int getAbboPlekken;
+    private static  JLabel openSpots = new JLabel("Free spots:");
+    private static JLabel timeLabel = new JLabel("Time:");
 
     /**
      * Constructor for objects of class CarPark
@@ -79,7 +79,7 @@ public class CarParkViewmvc extends AbstractView {
      */
     
     
-    public void updateView() {
+    public  void updateView() {
         
     	
   //  	openSpots.setText("There are " + String.valueOf(simulatormodel.getOpenSpots()) + " open parking spots.");
@@ -100,9 +100,9 @@ public class CarParkViewmvc extends AbstractView {
         Graphics graphics = carParkImage.getGraphics();
        //drawTest(graphics, Color.MAGENTA);
         int abboplekken = Model.getAbboPlekken();
-        for(int floor = 0; floor < simulatormodel.getFloors(); floor++) {
-            for(int row = 0; row < simulatormodel.getRows(); row++) {
-                for(int place = 0; place < simulatormodel.getPlaces(); place++) {
+        for(int floor = 0; floor < Model.getFloors(); floor++) {
+            for(int row = 0; row < Model.getRows(); row++) {
+                for(int place = 0; place < Model.getPlaces(); place++) {
 						Color color = Color.white;
                 	if(abboplekken > 0) {
                 		color = Color.yellow; //abboplekken worden hier geel gemaakt
@@ -137,12 +137,12 @@ public class CarParkViewmvc extends AbstractView {
         graphics.fillArc(100, 100, 100, 100, 100, 100);
     }
     
-    public void tick() {
-        for (int floor = 0; floor < simulatormodel.getFloors(); floor++) {
-            for (int row = 0; row < simulatormodel.getRows(); row++) {
-                for (int place = 0; place < simulatormodel.getPlaces(); place++) {
+    public static void tick() {
+        for (int floor = 0; floor < Model.getFloors(); floor++) {
+            for (int row = 0; row < Model.getRows(); row++) {
+                for (int place = 0; place < Model.getPlaces(); place++) {
                     Location location = new Location(floor, row, place);
-                    Car car = simulatormodel.getCarAt(location);
+                    Car car = Model.getCarAt(location);
                     if (car != null) {
                         car.tick();
                     }
