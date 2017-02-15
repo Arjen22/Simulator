@@ -24,17 +24,16 @@ public class Main {
 	simulatormodel = new Model(3, 6, 30, 140);
 	controller = new SimulatorController(simulatormodel);
     	carparkview = new CarParkView(simulatormodel,controller,piechart);
-    	screen.setSize(1498,761);
+    	screen.setSize(1000,800);
 	screen.setResizable(true);
 	screen.setLayout(null);
 	screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	screen.getContentPane().add(carparkview);
 	carparkview.setBounds(612,23,800,600);
-        
+   
 	piechart = new ChartView();
 	piechart.setBounds(10, 23, 600, 600);
 	screen.getContentPane().add(piechart);
-	
 	screen.setVisible(true);
 	simulatormodel.run(simulatormodel,controller,carparkview, piechart);
 	}

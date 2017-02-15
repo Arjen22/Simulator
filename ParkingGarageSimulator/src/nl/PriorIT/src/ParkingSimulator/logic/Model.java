@@ -198,7 +198,9 @@ public class Model extends GeneralModel {
 		this.carparkview = carparkview;
 		carparkview.tick();
 		// Update the car park view.
-		carparkview.updateView();	
+		carparkview.updateView();
+		piechart.updateView();
+		piechart.update();
 	}
 
 	private void carsArriving(){

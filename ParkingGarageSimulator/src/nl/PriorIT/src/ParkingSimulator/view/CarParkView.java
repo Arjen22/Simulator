@@ -35,7 +35,7 @@ public class CarParkView extends GeneralView {
             size = new Dimension(0,0);
             this.simulatormodel=simulatormodel;
             
-            JPanel openSpot = new JPanel();
+          /*  JPanel openSpot = new JPanel();
     		openSpot.add(openSpots);
     		add(openSpot);
     		openSpots = new JLabel();
@@ -74,7 +74,7 @@ public class CarParkView extends GeneralView {
     		
     		add(carQueuePass);
     		carQueuePass.setBounds(10, 10, 70, 30);
-    		
+    		*/
 
     		setVisible(true);
             
