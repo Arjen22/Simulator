@@ -41,7 +41,7 @@ public class Model extends GeneralModel {
 	
 	int weekDayArrivals= 100; // average number of arriving cars per hour
 	int weekendArrivals = 200; // average number of arriving cars per hour
-	int weekDayPassArrivals= 0; // average number of arriving cars per hour
+	int weekDayPassArrivals= 50; // average number of arriving cars per hour
 	int weekendPassArrivals = 5; // average number of arriving cars per hour
 
 	int enterSpeed = 3; // number of cars that can enter per minute
@@ -50,7 +50,7 @@ public class Model extends GeneralModel {
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-        private int tickPause = 40;
+        private int tickPause = 10;
 	
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -69,7 +69,6 @@ public class Model extends GeneralModel {
 	    exitCarQueue = new CarQueue();
 	    lastplace = lastloc();
 	    random = new Random();
-	    weekDayPassArrivals = abonnementen;
 	    
 	    
 	    totalMoney += abonnementen * 40;
@@ -144,12 +143,7 @@ public class Model extends GeneralModel {
 
 	
 	public double getPerc() { //telt niet goed, even kijken hoe
-		double vloer = getNumberOfFloors();
-		double rij = getNumberOfRows();
-		double plaats = getNumberOfPlaces();
-		
 		double totaal = numberOfSpots;
-		int NogOver =  numberOfOpenSpots;
 		double Bezet = numberOfSpots - numberOfOpenSpots;
 		percent =(Bezet/totaal)*100;
 		return percent;
@@ -182,6 +176,16 @@ public class Model extends GeneralModel {
 	
 	public double getMoney() {
 		return totalMoney;
+	}
+	
+	public int getQueueSize() {
+		int grootte = entranceCarQueue.carsInQueue();
+		return grootte;
+	}
+	
+	public int getQueueSizePass() {
+		int grootte = entrancePassQueue.carsInQueue();
+		return grootte;
 	}
 	
 	public void updateViews(CarParkView carparkview){
