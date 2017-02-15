@@ -41,18 +41,18 @@ public class Model extends GeneralModel {
 	private static int totalMinutes = 0;
 	double percent;
 
-	int weekDayArrivals= 100; // average number of arriving cars per hour
-	int weekendArrivals = 200; // average number of arriving cars per hour
-	int weekDayPassArrivals= abonnementen/4; // average number of arriving cars per hour
-	int weekendPassArrivals = abonnementen/8; // average number of arriving cars per hour
+	int weekDayArrivals= 150; // average number of arriving cars per hour
+	int weekendArrivals = 250; // average number of arriving cars per hour
+	int weekDayPassArrivals= 50; // average number of arriving cars per hour
+	int weekendPassArrivals = 25; // average number of arriving cars per hour
 
-	int enterSpeed = 3; // number of cars that can enter per minute
+	int enterSpeed = 5; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-	private int tickPause = 100;
+	private int tickPause = 50;
 
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
@@ -77,6 +77,7 @@ public class Model extends GeneralModel {
 	    moneyToday += abonnementen * 40;
 	    
 	}
+	
 
 	public static int getAbboPlekken(){
     	return abboplekken;
@@ -202,6 +203,27 @@ public class Model extends GeneralModel {
 	}
 
 	private void carsArriving(){
+		if(hour >= 0 && hour< 6) {
+			weekDayArrivals= 50;
+			weekendArrivals = 80;
+			weekDayPassArrivals = 20;
+			weekendPassArrivals = 10;
+			//weekDayPassArrivals = weekDayPassArrivals/4;
+			//weekendPassArrivals = weekendPassArrivals/4;
+		}
+		else if(hour >= 17 && hour < 0 ) {
+			weekDayArrivals = 90;
+			weekendArrivals = 190;
+			weekDayPassArrivals = 20;
+			weekendPassArrivals = 15;
+		}
+		
+		else {
+			weekDayArrivals = 150;
+			weekendArrivals = 250;
+			weekDayPassArrivals = 50;
+			weekendPassArrivals = 25;
+		}
 		int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
 		addArrivingCars(numberOfCars, NORMCAR);    	
 		numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);

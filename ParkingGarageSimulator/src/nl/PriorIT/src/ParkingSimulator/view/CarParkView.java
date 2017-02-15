@@ -21,7 +21,7 @@ public class CarParkView extends GeneralView {
         private GeneralController controller;
 		private int abboplekdraw;
 		public int getAbboPlekken;
-		private JLabel openSpots = new JLabel("Free spots:");
+		private JLabel openSpots = new JLabel("");
 		private JLabel timeLabel = new JLabel("Week:");
 		private JLabel bezetting = new JLabel("BezettingsGraad: ");
 		private JLabel carQueue = new JLabel("CarQueueLength: ");
@@ -96,10 +96,10 @@ public class CarParkView extends GeneralView {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, 400, 400);
             
-          if(carParkImage == null) {
+          /*if(carParkImage == null) {
               System.out.println("CarParkImage is null!");
               return;
-    	  }
+    	  }*/
     	  
     	  Dimension currentSize = getSize();
     	  if (size.equals(currentSize)) {
@@ -119,7 +119,7 @@ public class CarParkView extends GeneralView {
         
         public void updateView() {
         	
-        	openSpots.setText(String.valueOf(simulatormodel.getNumberOfOpenSpots()));
+        	openSpots.setText("Open plaatsen: "+simulatormodel.getNumberOfOpenSpots());
         	
         	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " 
         	+ simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" 
