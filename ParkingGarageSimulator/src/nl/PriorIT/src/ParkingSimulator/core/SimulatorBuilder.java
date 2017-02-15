@@ -4,6 +4,8 @@
 
 package nl.PriorIT.src.ParkingSimulator.core;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -61,8 +63,9 @@ public class SimulatorBuilder extends JFrame {
 	simulatorview.getContentPane().add(carparkview);
 	simulatorview.setVisible(true);
 	carparkview.setBounds(0,60,800,600);
+        setVisible(true);
+	getParkingGaragesize();
 	simulatormodel.run();
-	this.getParkingGaragesize();
     }
     
     /** Checking Classes for testing purposes and check evaluations */

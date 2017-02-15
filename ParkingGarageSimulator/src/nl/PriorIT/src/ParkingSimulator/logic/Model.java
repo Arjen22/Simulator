@@ -117,12 +117,16 @@ public class Model extends GeneralModel {
 	    return totalMoney;
 	}
 	
+	public CarParkView cpview() {
+	    return carparkview;
+	}
+	
 	/** Methods that run and update the controller with the last information */
 	
 	public void run() {
 		notifyViews();
 		for (int i = 0; i < 100000; i++) {
-			simulatormodel.tick();
+			tick();
 		}
 	}
 	
@@ -180,7 +184,7 @@ public class Model extends GeneralModel {
 		}
 
 		
-		public void updateViews(Model simulatormodel){
+		public void updateViews(){
 			carparkview.tick();
 			// Update the car park view.
 			carparkview.updateView();	
