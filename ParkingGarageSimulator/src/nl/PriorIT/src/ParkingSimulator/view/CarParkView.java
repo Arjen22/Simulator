@@ -21,7 +21,8 @@ public class CarParkView extends GeneralView {
         private GeneralController controller;
 		private int abboplekdraw;
 		public int getAbboPlekken;
-		private JLabel openSpots = new JLabel("");
+
+		private JLabel openSpots = new JLabel();
 		private JLabel timeLabel = new JLabel("Week:");
 		private JLabel bezetting = new JLabel("BezettingsGraad: ");
 		private JLabel carQueue = new JLabel("CarQueueLength: ");
@@ -30,12 +31,12 @@ public class CarParkView extends GeneralView {
         /**
          * Constructor for objects of class CarPark
          */
-        public CarParkView(Model simulatormodel, GeneralController controller) {
-            super(simulatormodel, controller);
+        public CarParkView(Model simulatormodel, GeneralController controller, ChartView piechart) {
+            super(simulatormodel, controller, piechart);
             size = new Dimension(0,0);
             this.simulatormodel=simulatormodel;
             
-            JPanel openSpot = new JPanel();
+          /*  JPanel openSpot = new JPanel();
     		openSpot.add(openSpots);
     		add(openSpot);
     		openSpots = new JLabel();
@@ -74,7 +75,7 @@ public class CarParkView extends GeneralView {
     		
     		add(carQueuePass);
     		carQueuePass.setBounds(10, 10, 70, 30);
-    		
+    		*/
 
     		setVisible(true);
             
@@ -118,9 +119,7 @@ public class CarParkView extends GeneralView {
         
         
         public void updateView() {
-        	
-        	openSpots.setText("Open plaatsen: "+simulatormodel.getNumberOfOpenSpots());
-        	
+        	openSpots.setText("Free plekjes: "+simulatormodel.getNumberOfOpenSpots());        	
         	timeLabel.setText(simulatormodel.getWeeks() + " Day: "+ simulatormodel.getDays() +" Time: " 
         	+ simulatormodel.getHours() +":"+ simulatormodel.getMinutes() + " Money earned = €" 
         	+ Math.round(simulatormodel.getMoney()) + "  Earned today: €" + Math.round(simulatormodel.getMoneyToday())

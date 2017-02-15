@@ -89,10 +89,10 @@ public class Model extends GeneralModel {
 		carsEntering(entranceCarQueue);  	
 	}
 
-	public void run(Model simulatormodel, SimulatorController controller, CarParkView carparkview) {
+	public void run(Model simulatormodel, SimulatorController controller, CarParkView carparkview, ChartView piechart) {
 		notifyViews();
 		for (int i = 0; i < 1000000; i++) {
-			tick(carparkview);
+			tick(carparkview, piechart);
 		}
 	}
 	
@@ -195,11 +195,13 @@ public class Model extends GeneralModel {
 		return grootte;
 	}
 	
-	public void updateViews(CarParkView carparkview){
+	public void updateViews(CarParkView carparkview, ChartView piechart){
 		this.carparkview = carparkview;
 		carparkview.tick();
 		// Update the car park view.
-		carparkview.updateView();	
+		carparkview.updateView();
+		piechart.updateView();
+		piechart.update();
 	}
 
 	private void carsArriving(){
@@ -512,11 +514,11 @@ public class Model extends GeneralModel {
         return null;
     }
 
-    private void tick(CarParkView carparkview) {
+    private void tick(CarParkView carparkview, ChartView piechart) {
     	this.carparkview = carparkview;
     	advanceTime();
     	handleExit();
-    	updateViews(carparkview);
+    	updateViews(carparkview, piechart);
     	// Pause.
         try {
             Thread.sleep(tickPause);

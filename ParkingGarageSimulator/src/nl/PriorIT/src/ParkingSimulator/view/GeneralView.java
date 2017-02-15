@@ -14,10 +14,12 @@ public abstract class GeneralView extends JPanel {
     
     protected Model simulatormodel;
     protected GeneralController controller;
+    protected ChartView piechart;
 
-	public GeneralView(Model simulatormodel, GeneralController controller) {
+	public GeneralView(Model simulatormodel, GeneralController controller, ChartView piechart) {
 		this.simulatormodel=simulatormodel;
 		this.controller=controller;
+		this.piechart = piechart;
 		simulatormodel.addView(this);
 	}
 	
