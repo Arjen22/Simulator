@@ -12,7 +12,10 @@ import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 public abstract class GeneralController extends JPanel {
 	protected Model simulatormodel;
-
+	/**
+	 * Constructor Controller
+	 * @param simulatormodel
+	 */
 	public GeneralController(Model simulatormodel) {
 		this.simulatormodel=simulatormodel;
 			

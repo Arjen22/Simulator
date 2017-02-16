@@ -17,6 +17,7 @@ public class Main {
 	private SimulatorController controller;
 	//private CarParkView carParkView;
     /**
+     * constructor van alles, hier wordt een nieuwe simulator aangemaakt en een nieuwe piechart
      * @param args
      */
 	public Main () {

@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import nl.PriorIT.src.ParkingSimulator.logic.Car;
 import nl.PriorIT.src.ParkingSimulator.logic.Location;
 import nl.PriorIT.src.ParkingSimulator.logic.Model;
-
+/**
+ * hier worden de fields gedefined
+ */
 public class ChartView extends JPanel{
 	
 	private JLabel totalCars = new JLabel();
@@ -24,7 +26,9 @@ public class ChartView extends JPanel{
 	private int green;
 	private Image piechart;
 	private Dimension size;
-	
+	/**
+	 * constructor van chartview
+	 */
 	public ChartView() {
     	add(new JLabel("Number of cars: "));
         add(totalCars);
@@ -35,11 +39,17 @@ public class ChartView extends JPanel{
         add(new JLabel("ReservationCars (Green): "));
         add(greenCars);
 	}
-	
-	public Dimension setSizePieChart() {
+
+	/**
+	 * hiermee set je de size van de chartview
+	 * @return
+	 */
+	public Dimension setSizePieChart() {		
 		return new Dimension(600, 600);
 	}
-	
+	/**
+	 * hiermee teken je de chartview, het gebied waar die in komt
+	 */
 	public void paintComponent(Graphics g) {
 
 			if (piechart == null) {
@@ -55,14 +65,22 @@ public class ChartView extends JPanel{
 				g.drawImage(piechart, 0, 0, currentSize.width, currentSize.height, null);
 			}
         }
+	/**
+	 * hiermee worden de hoeveelheid rood en blauw en groene geset
+	 * @param numberBlue
+	 * @param numberRed
+	 * @param numberGreen
+	 */
 	public void setNumbers(int numberBlue, int numberRed, int numberGreen) {
 		
 		this.blue = numberBlue;
 		this.red = numberRed;
-		this.green = numberGreen;
-		
+		this.green = numberGreen;		
 	}
 	
+	/**
+	 * hiermee zorg je dat de view update
+	 */
 	public void updateView() {
 		int blue = 0;
 		int red = 0;
@@ -94,6 +112,10 @@ public class ChartView extends JPanel{
 		 }
 	}
 
+	/**
+	 * hiermee teken je de cirkel
+	 * @param graphics
+	 */
 	private void drawcircle(Graphics graphics) {
         int maxAmount=(Model.getNumberOfPlaces()*Model.getNumberOfFloors()*Model.getNumberOfRows());
 		int arc1 = blue * 360 / maxAmount;
@@ -116,13 +138,13 @@ public class ChartView extends JPanel{
         
 	}	
 	
+	/**
+	 * update de JPanels
+	 */
 	public void update() {
 		totalCars.setText(String.valueOf(Model.getNumberOfPlaces()*Model.getNumberOfFloors()*Model.getNumberOfRows()-Model.getNumberOfOpenSpots()));
         blueCars.setText(String.valueOf(blue));
         redCars.setText(String.valueOf(red));
         greenCars.setText(String.valueOf(green));
 	}
-
-
-
 }

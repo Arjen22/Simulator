@@ -12,7 +12,9 @@ import nl.PriorIT.src.ParkingSimulator.logic.Model;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Hier worden de fields gedefined
+ */
 public class CarParkView extends GeneralView {
         
         private Dimension size;
@@ -158,7 +160,12 @@ public class CarParkView extends GeneralView {
             repaint();
         }
         }
-        
+        /**
+         * hiermee tekent die de places
+         * @param graphics
+         * @param location
+         * @param color
+         */
         public static void drawPlace(Graphics graphics, Location location, Color color) {
             graphics.setColor(color);
             graphics.fillRect(
@@ -167,7 +174,10 @@ public class CarParkView extends GeneralView {
                     20 - 1,
                     10 - 1);
         }
-        
+
+        /**
+         * hiermee vordert de tijd
+         */
         public void tick() {
             for (int floor = 0; floor < simulatormodel.getNumberOfFloors(); floor++) {
                 for (int row = 0; row < simulatormodel.getNumberOfRows(); row++) {

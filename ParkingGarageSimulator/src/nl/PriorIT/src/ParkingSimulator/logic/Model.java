@@ -13,8 +13,7 @@ import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
 /**
- * @author PriorIT
- * @version 1.0
+ * Hier worden de fields gedefined
  */
 public class Model extends GeneralModel {
 	
@@ -62,6 +61,14 @@ public class Model extends GeneralModel {
 	private static final String RESS = "3";
 	private int tickPause = 100;
 
+/**
+ * Dit is de constructor van vrijwel alles.
+ * @param numberOfFloors
+ * @param numberOfRows
+ * @param numberOfPlaces
+ * @param abboplekken
+ */
+
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
 		Model.numberOfFloors = numberOfFloors;
 		Model.numberOfRows = numberOfRows;
@@ -85,24 +92,38 @@ public class Model extends GeneralModel {
 	    
 	}
 	
-
+	/**
+	 * returned abboplekken
+	 * @return
+	 */
 	public static int getAbboPlekken(){
     	return abboplekken;
     }
-	
+	/**
+	 * dit zorgt er voor dat er autos worden toegevoegd aan een queue
+	 */
 	public void handleEntrance(){
 		carsArriving();
 		carsEntering(entrancePassQueue);
 		carsEntering(entranceCarQueue);  	
 	}
-
+	/**
+	 * dit zorgt dat er wordt geupdate
+	 * @param simulatormodel
+	 * @param controller
+	 * @param carparkview
+	 * @param piechart
+	 */
 	public void run(Model simulatormodel, SimulatorController controller, CarParkView carparkview, ChartView piechart) {
 		notifyViews();
 		for (int i = 0; i < 1000000; i++) {
 			tick(carparkview, piechart);
 		}
 	}
-	
+	/**
+	 * dit is de laatste locatie van de abonnementshouders
+	 * @return
+	 */
 	public Location lastloc() {
 		int floor = 0;
 		int row = 0;
@@ -116,13 +137,17 @@ public class Model extends GeneralModel {
 		Location location = new Location(floor, row , place);
 		return location;
 	}
-
+	/**
+	 * zorgt er voor dat autos weg gaan uit de queue
+	 */
 	public void handleExit(){
 		carsReadyToLeave();
 		carsPaying();
 		carsLeaving();
 	}
-
+	/**
+	 * nu gaat de tijd verder hier door
+	 */
 	public void advanceTime(){
 		// Advance the time by one minute.
 		minute++;
@@ -145,63 +170,101 @@ public class Model extends GeneralModel {
 			week -= 52;
 		}
 	}
-
+	/**
+	 * returned de minuten
+	 * @return
+	 */
 	public String getMinutes() {		
 		
 		String text = (minute < 10 ? "0" : "") + minute;
 		return text;
 		
 	}
-	
+	/**
+	 * returned het percentage openplekken
+	 * @return
+	 */
 	public double getPerc() {
 		double totaal = numberOfSpots;
 		double Bezet = numberOfSpots - numberOfOpenSpots;
 		percent =(Bezet/totaal)*100;
 		return percent;
-	}	
+	}
+	/**
+	 * uitbreiding op getPerc()
+	 * @return
+	 */
 	public String getPercent() {
 		DecimalFormat df = new DecimalFormat("0.##");
 		String antwoord = df.format(getPerc());
 		return antwoord;
 	}
-
+	/**
+	 * returned uren
+	 * @return
+	 */
 	public String getHours() {
 
 		String text = (hour < 10 ? "0" : "") + hour;
 		return text;
 		
 	}
-	
+	/**
+	 * returned dagen
+	 * @return
+	 */
 	public int getDays() {
 		return day;
 	}
-	
+	/**
+	 * returned week
+	 * @return
+	 */
 	public int getWeeks() {
 		return week;
 	}
-	
+	/**
+	 * returned hoeveel geld er al verdient is
+	 * @return
+	 */
 	public double getMoney() {
 		return totalMoney;
 	}
-	
+	/**
+	 * hoeveel geld er vandaag verdient is
+	 * @return
+	 */
 	public double getMoneyToday() {
 		return moneyToday;
 	}
-	
+	/**
+	 * hoeveel geld er verwacht wordt dat er verdient wordt
+	 * @return
+	 */
 	public double getExpectedMoney() {
 		return expectedMoney;
 	}
-	
+	/**
+	 * de grootte van de rij van normale autos
+	 * @return
+	 */
 	public int getQueueSize() {
 		int grootte = entranceCarQueue.carsInQueue();
 		return grootte;
 	}
-	
+	/**
+	 * grootte van de abonnementshouders rij
+	 * @return
+	 */
 	public int getQueueSizePass() {
 		int grootte = entrancePassQueue.carsInQueue();
 		return grootte;
 	}
-	
+	/**
+	 * hiermee worden alle views geupdated
+	 * @param carparkview
+	 * @param piechart
+	 */
 	public void updateViews(CarParkView carparkview, ChartView piechart){
 		this.carparkview = carparkview;
 		this.piechart = piechart;
@@ -211,7 +274,9 @@ public class Model extends GeneralModel {
 		piechart.updateView();
 		piechart.update();
 	}
-
+	/**
+	 * hoeveel mensen er binnenkomen tussen bepaalde tijdstippen
+	 */
 	private void carsArriving(){
 		if(hour >= 0 && hour< 6) {
 			weekDayArrivals= 50;
@@ -245,7 +310,10 @@ public class Model extends GeneralModel {
 		numberOfCars=getNumberOfCars(weekDayRessArrivals, weekendRessArrivals);
 		addArrivingCars(numberOfCars, RESS); 
 	}
-
+	/**
+	 * hij voegt auto's aan een queue toe hier
+	 * @param queue
+	 */
 	private void carsEntering(CarQueue queue){
 		int i=0;
 		// Remove car from the front of the queue and assign to a parking space.
@@ -274,7 +342,9 @@ public class Model extends GeneralModel {
 			
 		}
 	}
-	
+	/**
+	 * hij get autos die bijna uit de rij gaan
+	 */
 	private void carsReadyToLeave(){
 		// Add leaving cars to the payment queue.
 		Car car = getFirstLeavingCar();
@@ -289,11 +359,13 @@ public class Model extends GeneralModel {
 			car = getFirstLeavingCar();
 		}
 	}
-	// Bedragen voor de gewone auto's per uur: rood 3 per uur(0.05 per minuut)
-	// De abonementshouders betalen 40euro per week
-	// Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
+
+	/**
+	 * Bedragen voor de gewone auto's per uur: rood 3 per uur(0.05 per minuut)
+	 * De abonementshouders betalen 40euro per week
+	 * Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
+	 */
 	private void carsPaying(){
-		// Let cars pay.
 		int i=0;
 		
 		while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
@@ -317,7 +389,9 @@ public class Model extends GeneralModel {
 			i++;
 		}
 	}
-
+/**
+ * verwijdert auto's uit de car queue
+ */
 	private void carsLeaving(){
 		// Let cars leave.
 		int i=0;
@@ -326,7 +400,12 @@ public class Model extends GeneralModel {
 			i++;
 		}	
 	}
-
+/**
+ * returned het aantal autos per uur
+ * @param weekDay
+ * @param weekend
+ * @return
+ */
 	private int getNumberOfCars(int weekDay, int weekend){
 		Random random = new Random();
 		
@@ -340,7 +419,11 @@ public class Model extends GeneralModel {
 		double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
 		return (int)Math.round(numberOfCarsPerHour / 60);	
 	}
-
+	/**
+	 * voegt auto's toe aan het einde van de rij
+	 * @param numberOfCars
+	 * @param type
+	 */
 	private void addArrivingCars(int numberOfCars, String type){
 		// Add the cars to the back of the queue.
 		switch(type) {
@@ -361,36 +444,60 @@ public class Model extends GeneralModel {
 			break;
 		}
 	}
-
+	/**
+	 * removed auto ook van de spot
+	 * @param car
+	 */
 	private void carLeavesSpot(Car car){
 		removeCarAt(car.getLocation());
 		exitCarQueue.addCar(car);
 	}
-    
+    /**
+     * returned floors
+     * @return
+     */
 	public static int getNumberOfFloors() {
         return numberOfFloors;
     }
-
+	/**
+	 * returned rows
+	 * @return
+	 */
     public static int getNumberOfRows() {
         return numberOfRows;
     }
-
+    /**
+     * returned places
+     * @return
+     */
     public static int getNumberOfPlaces() {
         return numberOfPlaces;
     }
-
+    /**
+     * returned het aantal open plekken
+     * @return
+     */
     public static int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
     
-    
+    /**
+     * returned auto op een bepaalde locatie
+     * @param location
+     * @return
+     */
     public static Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
         }
          return cars[location.getFloor()][location.getRow()][location.getPlace()];
     }
-
+    /**
+     * zet een auto op een plek
+     * @param location
+     * @param car
+     * @return
+     */
     public boolean setCarAt(Location location, Car car) {
         if (!locationIsValid(location)) {
             return false;
@@ -404,7 +511,11 @@ public class Model extends GeneralModel {
         }
         return false;
     }
-
+    /**
+     * remove auto van de locatie
+     * @param location
+     * @return
+     */
     public Car removeCarAt(Location location) {
         if (!locationIsValid(location)) {
             return null;
@@ -418,13 +529,21 @@ public class Model extends GeneralModel {
         numberOfOpenSpots++;
         return car;
     } 
-    
+    /**
+     * afrond methode
+     * @param min
+     * @param max
+     * @return
+     */
     public int nextInt(int min, int max) {
     	random = new Random();
     	int locatie = random.nextInt(max - min);
     	return locatie+min;
     }
-
+    /**
+     * check zit het deel met normale auto's vol
+     * @return
+     */
     public int checkNormGarage() {
     	int numberOfNormCars = 0;
     	for(int floor = lastplace.getFloor(); floor <= getNumberOfFloors(); floor++){
@@ -443,7 +562,10 @@ public class Model extends GeneralModel {
 		return numberOfNormCars;
     	
     }
-    
+    /**
+     * is het stuk met abonnementsplekken leeg
+     * @return
+     */
     public boolean checkAbboGarage() {//kijkt of abboplekken = vol dan blauwe autos op rode plekken(true) anders false
 	int openAbboPlekken=abboplekken;
     for (int floor = 0; floor <= lastplace.getFloor(); floor++) {
@@ -473,7 +595,11 @@ public class Model extends GeneralModel {
 		}
 		else {return false;}			
     }
-    
+    /**
+     * krijg de eerste lokatie die vrij is
+     * @param color
+     * @return
+     */
     public Location getFirstFreeLocation(Color color) {
     	int floor = 0;
     	int row = 0;
@@ -523,7 +649,10 @@ public class Model extends GeneralModel {
 
         
 
-                
+    /**
+     * return de eerste auto die weggaat van de locatie            
+     * @return
+     */
     public Car getFirstLeavingCar() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -538,7 +667,11 @@ public class Model extends GeneralModel {
         }
         return null;
     }
-
+    /**
+     * hiermee gaat de tijd telkens verder en zorg dit dat je het ziet
+     * @param carparkview
+     * @param piechart
+     */
     private void tick(CarParkView carparkview, ChartView piechart) {
     	this.carparkview = carparkview;
     	this.piechart = piechart;
@@ -554,7 +687,11 @@ public class Model extends GeneralModel {
         }
     	handleEntrance();
     }
-
+    /**
+     * staat er geen andere auto op deze locatie
+     * @param location
+     * @return
+     */
     private static boolean locationIsValid(Location location) {
         int floor = location.getFloor();
         int row = location.getRow();

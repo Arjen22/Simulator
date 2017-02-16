@@ -11,18 +11,27 @@ import java.util.List;
 
 import nl.PriorIT.src.ParkingSimulator.view.GeneralView;
 
-
+/**
+ * Hier worden de fields gedefined
+ */
 public abstract class GeneralModel {
 	private List<GeneralView> views;
-	
+	/**
+	 * maakt een nieuwe list aan
+	 */
 	public GeneralModel() {
 		views=new ArrayList<GeneralView>();
 	}
-	
+	/**
+	 * add een view in de list
+	 * @param view
+	 */
 	public void addView(GeneralView view) {
 		views.add(view);
 	}
-	
+	/**
+	 * voor elke GeneralView in lijst view, doe updateview
+	 */
 	public void notifyViews() {
 		for(GeneralView v: views) v.updateView();
 	}
