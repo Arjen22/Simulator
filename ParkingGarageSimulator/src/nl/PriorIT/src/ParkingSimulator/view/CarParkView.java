@@ -96,12 +96,7 @@ public class CarParkView extends GeneralView {
         public void paintComponent(Graphics g) {
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, 400, 400);
-            
-          /*if(carParkImage == null) {
-              System.out.println("CarParkImage is null!");
-              return;
-    	  }*/
-    	  
+                	  
     	  Dimension currentSize = getSize();
     	  if (size.equals(currentSize)) {
     	      g.drawImage(carParkImage, 0, 0, null);
@@ -170,16 +165,7 @@ public class CarParkView extends GeneralView {
                     location.getFloor() * 260 + (1 + (int)Math.floor(location.getRow() * 0.5)) * 75 + (location.getRow() % 2) * 20,
                     60 + location.getPlace() * 10,
                     20 - 1,
-                    10 - 1); // TODO use dynamic size or constants
-        }
-        
-        public static void drawTest(Graphics graphics, Color color) {
-            graphics.setColor(Color.MAGENTA);
-            graphics.fillRect(0,0,400,400);
-            graphics.setColor(Color.CYAN);
-            graphics.fillOval(100, 0, 100, 100);
-            graphics.setColor(Color.ORANGE);
-            graphics.fillArc(100, 100, 100, 100, 100, 100);
+                    10 - 1);
         }
         
         public void tick() {

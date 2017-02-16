@@ -12,6 +12,10 @@ import java.text.DecimalFormat;
 import nl.PriorIT.src.ParkingSimulator.controller.SimulatorController;
 import nl.PriorIT.src.ParkingSimulator.view.*;
 
+/**
+ * @author PriorIT
+ * @version 1.0
+ */
 public class Model extends GeneralModel {
 	
 	private CarQueue entranceCarQueue;
@@ -19,6 +23,7 @@ public class Model extends GeneralModel {
 	private CarQueue paymentCarQueue;
 	private CarQueue exitCarQueue;
 	private CarParkView carparkview;
+	private ChartView piechart;
 	
 	private static int numberOfFloors;
 	private static int numberOfRows;
@@ -45,15 +50,17 @@ public class Model extends GeneralModel {
 	int weekendArrivals = 250; // average number of arriving cars per hour
 	int weekDayPassArrivals= 50; // average number of arriving cars per hour
 	int weekendPassArrivals = 25; // average number of arriving cars per hour
+	int weekDayRessArrivals = 40; // average number of arriving cars per hour
+	int weekendRessArrivals = 20; // average number of arriving cars per hour
 
-	int enterSpeed = 5; // number of cars that can enter per minute
+	int enterSpeed = 3; // number of cars that can enter per minute
 	int paymentSpeed = 7; // number of cars that can pay per minute
 	int exitSpeed = 5; // number of cars that can leave per minute
 
 	private static final String NORMCAR = "1";
 	private static final String PASS = "2";
-	private int tickPause = 50;
-
+	private static final String RESS = "3";
+	private int tickPause = 100;
 
 	public Model(int numberOfFloors, int numberOfRows, int numberOfPlaces, int abboplekken) {
 		Model.numberOfFloors = numberOfFloors;
@@ -197,8 +204,9 @@ public class Model extends GeneralModel {
 	
 	public void updateViews(CarParkView carparkview, ChartView piechart){
 		this.carparkview = carparkview;
+		this.piechart = piechart;
 		carparkview.tick();
-		// Update the car park view.
+		// Update the carparkview.
 		carparkview.updateView();
 		piechart.updateView();
 		piechart.update();
@@ -210,12 +218,16 @@ public class Model extends GeneralModel {
 			weekendArrivals = 80;
 			weekDayPassArrivals = 30;
 			weekendPassArrivals = 20;
+			weekDayRessArrivals = 25;
+			weekendRessArrivals = 20;
 		}
 		else if(hour >= 17 && hour < 0 ) {
 			weekDayArrivals = 90;
 			weekendArrivals = 190;
 			weekDayPassArrivals = 40;
 			weekendPassArrivals = 25;
+			weekDayRessArrivals = 30;
+			weekendRessArrivals = 30;
 		}
 		
 		else {
@@ -223,11 +235,15 @@ public class Model extends GeneralModel {
 			weekendArrivals = 250;
 			weekDayPassArrivals = 50;
 			weekendPassArrivals = 25;
+			weekDayRessArrivals = 40;
+			weekendRessArrivals = 20;
 		}
 		int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
 		addArrivingCars(numberOfCars, NORMCAR);    	
 		numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
-		addArrivingCars(numberOfCars, PASS);    	
+		addArrivingCars(numberOfCars, PASS);
+		numberOfCars=getNumberOfCars(weekDayRessArrivals, weekendRessArrivals);
+		addArrivingCars(numberOfCars, RESS); 
 	}
 
 	private void carsEntering(CarQueue queue){
@@ -273,24 +289,30 @@ public class Model extends GeneralModel {
 			car = getFirstLeavingCar();
 		}
 	}
-
+	// Bedragen voor de gewone auto's per uur: rood 3 per uur(0.05 per minuut)
+	// De abonementshouders betalen 40euro per week
+	// Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
 	private void carsPaying(){
 		// Let cars pay.
 		int i=0;
 		
 		while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
 			Car car = paymentCarQueue.removeCar();
-			// Bedragen voor de gewone auto's per uur: rood 3 per uur(0.05 per minuut)
-			// De abonementshouders betalen 40euro per week
-			// Reserveer auto's betalen 3euro per uur plus een reserveringsbedrag van 2.00euro
-			if(car.getHasToPay()== true) {
-			totalMoney += car.getTotalMinutes() * 0.05;
-			if(hour >=0 &&(hour <= 23 && minute <= 59)) {
-			moneyToday += car.getTotalMinutes() * 0.05;
+			
+			if(car.getHasToPay()== true && car.getColor()== Color.red) {
+				totalMoney += car.getTotalMinutes() * 0.05;
+				if(hour >=0 &&(hour <= 23 && minute <= 59)) {
+					moneyToday += car.getTotalMinutes() * 0.05;
+				}
 			}
+			if(car.getHasToPay()== true && car.getColor()== Color.green) {
+				totalMoney += car.getTotalMinutes() * 0.05 + 2;
+				if(hour >=0 &&(hour <= 23 && minute <= 59)) {
+					moneyToday += car.getTotalMinutes() * 0.05 + 2;
+				}
 			}
 			totalMinutes -= car.getTotalMinutes();
-			expectedMoney = totalMinutes*0.05;
+			expectedMoney = car.getColor() == Color.red ? totalMinutes*0.05: totalMinutes*0.05+2;
 			carLeavesSpot(car);
 			i++;
 		}
@@ -331,7 +353,12 @@ public class Model extends GeneralModel {
 			for (int i = 0; i < numberOfCars; i++) {
 				entrancePassQueue.addCar(new ParkingPassCar());
 			}
-			break;	            
+			break;
+		case RESS:
+			for (int i = 0; i < numberOfCars; i++) {
+				entrancePassQueue.addCar(new ReservationCar());
+			}
+			break;
 		}
 	}
 
@@ -514,9 +541,11 @@ public class Model extends GeneralModel {
 
     private void tick(CarParkView carparkview, ChartView piechart) {
     	this.carparkview = carparkview;
+    	this.piechart = piechart;
     	advanceTime();
     	handleExit();
     	updateViews(carparkview, piechart);
+    	piechart.update();
     	// Pause.
         try {
             Thread.sleep(tickPause);
